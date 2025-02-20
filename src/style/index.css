@@ -1,0 +1,397 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Exo+2:ital,wght@0,900;1,900&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: "Roboto", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+pre {
+  font-family: "Roboto", serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.roboto-regular {
+  font-family: "Roboto", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.roboto-medium {
+  font-family: "Roboto", serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.roboto-bold {
+  font-family: "Roboto", serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.roboto-black {
+  font-family: "Roboto", serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 3px;
+  border-radius: 50%;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 50%;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.ant-popover-inner {
+  padding: 0 !important;
+  /* Make sure this is enforced */
+}
+
+.ant-popover-content {
+  padding: 0 !important;
+  /* Ensure no padding in content */
+}
+
+/* Custom styles */
+.ant-dropdown-menu-item {
+  padding: 0 !important;
+  /* Remove padding for each menu item */
+}
+
+.ant-dropdown-menu {
+  padding: 0 !important;
+  /* Remove padding for the whole menu */
+  background-color: #f9f9f9 !important;
+  /* Custom background color */
+}
+
+/* Style for navigation buttons */
+.swiper-button-next,
+.swiper-button-prev {
+  /* Change to your desired color */
+  font-size: 20px;
+  /* Adjust size as needed */
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  backdrop-filter: blur(80px);
+  background: #565454;
+  /* Adjust the blur intensity as needed */
+  border-radius: 10rem;
+
+  padding: 20px;
+}
+
+/* Make sure the tab buttons also change color in dark mode */
+.ant-tabs-nav .ant-tabs-tab {
+  color: rgb(74, 73, 73);
+  /* Inactive tab color */
+}
+
+/* Inactive tab labels */
+.ant-tabs-nav .ant-tabs-tab {
+  color: rgba(0, 0, 0);
+  /* Light mode inactive color */
+  transition: all 0.1s ease;
+}
+
+/* Hover state for inactive tabs */
+.ant-tabs-nav .ant-tabs-tab:hover {
+  color: #4e9af1;
+  /* Hover color */
+}
+
+/* Active tab label */
+.ant-tabs-nav .ant-tabs-tab-active {
+  color: #2d74da;
+  /* Active tab color */
+}
+
+/* Dark mode styles */
+.dark .ant-tabs-nav .ant-tabs-tab {
+  color: rgba(255, 255, 255);
+  /* Inactive tab color in dark mode */
+}
+
+.dark .ant-tabs-nav .ant-tabs-tab:hover {
+  color: #4e9af1;
+  /* Hover color in dark mode */
+}
+
+.dark .ant-tabs-nav .ant-tabs-tab-active {
+  color: #2d74da;
+  /* Active tab color in dark mode */
+}
+
+.dark .anticon-ellipsis {
+  filter: invert(100) sepia(100%) saturate(100%) brightness(100%);
+}
+
+.dark .ant-tabs-dropdown .ant-tabs-dropdown-menu .ant-tabs-dropdown-menu-item {
+  background-color: #272727;
+
+  color: white;
+}
+
+.dark .ant-tabs-dropdown .ant-tabs-dropdown-menu {
+  background-color: black;
+}
+
+/* Fading image effect with more fade at the bottom and no effect at the top */
+.fading-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* width: 100%; */
+  height: auto;
+  object-fit: contain;
+
+  /* Masking gradient for fade effect */
+  -webkit-mask-image: linear-gradient(to bottom,
+      rgba(0, 0, 0, 1) 20%,
+      /* Fully opaque at the top (20% of the height) */
+      rgba(0, 0, 0, 0.5) 60%,
+      /* Semi-transparent in the middle */
+      rgba(0, 0, 0, 0) 90%
+      /* Fully transparent at the bottom */
+    );
+  mask-image: linear-gradient(to bottom,
+      rgba(0, 0, 0, 1) 20%,
+      rgba(0, 0, 0, 0.5) 60%,
+      rgba(0, 0, 0, 0) 90%);
+
+  /* Compatibility across browsers */
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.custom-modal .ant-modal-content {
+  background-color: white;
+  color: black;
+}
+
+.dark .custom-modal .ant-modal-content,
+.dark .custom-modal .ant-modal-title {
+  background-color: #282828;
+  color: #ffffff;
+}
+
+.dark .ant-upload-wrapper .ant-upload-drag {
+  border: 1px dashed rgb(87, 86, 86);
+}
+
+.dark .ant-upload-wrapper .ant-upload-drag:hover {
+  border: 1px dashed rgb(134, 131, 131);
+}
+
+.dark .anticon {
+  color: white;
+}
+
+:where(.css-dev-only-do-not-override-1kf000u).ant-form-vertical .ant-form-item:not(.ant-form-item-horizontal) .ant-form-item-row {
+  flex-direction: column;
+  align-items: start;
+}
+
+.dark .ant-input-outlined {
+  background: #282828;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #d9d9d9;
+  /* color: white; */
+
+  /* color: red; */
+}
+
+.custom-input {
+  padding: 15px;
+  font-size: 15px;
+  /* color: red; */
+}
+
+.ant-input .ant-input-outlined .ant-input-status-success {
+  color: #2d74da;
+}
+
+.dark :where(.css-dev-only-do-not-override-1kf000u).ant-input-outlined.ant-input-status-error:not(.ant-input-disabled),
+.dark :where(.css-dev-only-do-not-override-1kf000u).ant-input-outlined.ant-input-status-error:not(.ant-input-disabled):focus,
+.dark :where(.css-dev-only-do-not-override-1kf000u).ant-input-outlined.ant-input-status-error:not(.ant-input-disabled):hover {
+  background: #282828;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ff0000;
+}
+
+.dark :where(.css-dev-only-do-not-override-1kf000u).ant-form-item .ant-form-item-label>label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  height: 32px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 14px;
+}
+
+.dark :where(.css-dev-only-do-not-override-1kf000u).ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+  display: inline-block;
+  margin-inline-end: 4px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 14px;
+  font-family: SimSun, sans-serif;
+  line-height: 1;
+  content: "*";
+}
+
+.dark :where(.css-dev-only-do-not-override-1kf000u).ant-btn-variant-outlined,
+.dark :where(.css-dev-only-do-not-override-1kf000u).ant-btn-variant-dashed {
+  border: none;
+  background: #bdbaba;
+}
+
+.dark :where(.css-dev-only-do-not-override-1kf000u).ant-popover .ant-popover-inner {
+  background-color: #3a3939;
+}
+
+.dark :where(.css-dev-only-do-not-override-1kf000u).ant-btn-variant-solid {
+  color: #fff;
+  background: #5a6069;
+}
+
+.ant-popconfirm-inner-content {
+  padding: 15px;
+}
+
+.dark :where(.css-dev-only-do-not-override-1kf000u).ant-popconfirm .ant-popconfirm-message .ant-popconfirm-title {
+  font-weight: 600;
+  color: rgb(255 255 255 / 88%);
+}
+
+.dark :where(.css-dev-only-do-not-override-1kf000u).ant-popconfirm .ant-popconfirm-message .ant-popconfirm-description {
+  margin-top: 4px;
+  color: rgb(183 179 179 / 88%);
+}
+
+.dark :where(.css-dev-only-do-not-override-1kf000u).ant-popover .ant-popover-arrow::after {
+  background: #3a3939;
+}
+
+.dark :where(.css-dev-only-do-not-override-1kf000u).ant-modal .ant-modal-content,
+.dark .ant-modal-title {
+  background-color: #282828;
+  color: white;
+}
+
+:where(.css-dev-only-do-not-override-1kf000u).ant-form {
+  /* display: flex;
+  flex-direction: column; */
+  gap: 10px;
+}
+
+:where(.css-dev-only-do-not-override-1kf000u).ant-row {
+  align-items: center;
+}
+
+.dark .ant-input-outlined {
+  color: white;
+}
+
+:where(.css-dev-only-do-not-override-1kf000u).ant-row {
+  display: flex;
+  /* flex-wrap: wrap; */
+  min-width: 0;
+}
+
+:where(.css-dev-only-do-not-override-1kf000u).ant-form:not(.ant-form-inline) .ant-form-item {
+  flex-wrap: wrap;
+}
+
+:where(.css-dev-only-do-not-override-1kf000u).ant-form:not(.ant-form-inline) .ant-form-item .ant-form-item-label:not([class*=" ant-col-xs"]),
+:where(.css-dev-only-do-not-override-1kf000u).ant-form:not(.ant-form-inline) .ant-form-item .ant-form-item-control:not([class*=" ant-col-xs"]),
+:where(.css-dev-only-do-not-override-1kf000u).ant-form:not(.ant-form-inline) .ant-form-item .ant-form-item-label:not([class*=" ant-col-xs"]),
+:where(.css-dev-only-do-not-override-1kf000u).ant-form:not(.ant-form-inline) .ant-form-item .ant-form-item-control:not([class*=" ant-col-xs"]),
+:where(.css-dev-only-do-not-override-1kf000u).ant-form:not(.ant-form-inline) .ant-form-item .ant-form-item-label:not([class*=" ant-col-xs"]),
+:where(.css-dev-only-do-not-override-1kf000u).ant-form:not(.ant-form-inline) .ant-form-item .ant-form-item-control:not([class*=" ant-col-xs"]) {
+  flex: 0 0 100%;
+  max-width: 100%;
+  display: flex;
+}
+
+
+/* Override Ant Design's default styles for Input.TextArea */
+.custom-textarea {
+  background-color: transparent !important;
+  border-color: #494949 !important;
+  /* Custom border color */
+  border-bottom-width: 2px !important;
+  border-top: transparent !important;
+  border-left: transparent !important;
+  border-right: transparent !important;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 0.875rem !important;
+  padding: 0.5rem 0 !important;
+  resize: none !important;
+  outline: none !important;
+  border-radius: 0%;
+  /* Prevent default resize */
+}
+
+.custom-textarea:focus {
+  border-color: rgb(223, 222, 222)949 !important;
+  border-bottom-width: 2px !important;
+  border-top: transparent !important;
+  border-left: transparent !important;
+  border-right: transparent !important;
+  box-shadow: none;
+  /* Focus border color */
+
+}
+
+/* Add this CSS for like animation */
+.like-animation {
+  animation: likeAnimation 0.3s ease-out;
+}
+
+@keyframes likeAnimation {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
