@@ -3,7 +3,7 @@ import { IoMdMore } from "react-icons/io";
 import ReactPlayer from "react-player"; // Import ReactPlayer
 import { IoVolumeMuteOutline, IoVolumeHighOutline } from "react-icons/io5";
 import { useNavigate } from "react-router";
-import { timesAgo } from "../../utils/timeAgo";
+import { formatTime, timesAgo } from "../../utils/timeAgo";
 import { RiPlayListAddFill } from "react-icons/ri";
 
 import { Popover } from "antd";
@@ -93,7 +93,7 @@ const VideoCard = ({ item }) => {
                 onClick={() => navigate(`/video/${item?._id}`)}
               />
               <p className="absolute bottom-1 right-1 bg-zinc-900 py-[2px] px-1 text-[10px] bg-opacity-70 rounded-md text-white">
-                11:20
+                {formatTime(item?.duration)}
               </p>
             </>
           )}
