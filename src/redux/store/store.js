@@ -28,6 +28,7 @@ import incrementVideoViewSlice from "../slice/videos/incrementVideoViewSlice"
 import getWatchHistorySlice from "../slice/users/getWatchHistorySlice"
 
 import getChannelStatsSlice from "../slice/dashboard/getChannelStatsSlice"
+// eslint-disable-next-line import/no-unresolved
 import getYourVideosSlice from "../slice/dashboard/getYourVideosSlice"
 
 import addCommentSlice from "../slice/comments/addCommentSlice"

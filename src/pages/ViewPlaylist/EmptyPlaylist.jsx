@@ -7,6 +7,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import EditPlaylistModal from "../../components/common/Modals/EditPlaylist";
 import DeleteModal from "../../components/common/Modals/DeleteModal";
 import { addVideoToPlaylist } from "../../redux/slice/playlist/addVideoToPlaylistSlice";
+// eslint-disable-next-line import/no-unresolved
 import { getYourVideos } from "../../redux/slice/dashboard/getYourVideosSlice";
 import { connect } from "react-redux";
 import useMessage from "../../utils/useMessage";
