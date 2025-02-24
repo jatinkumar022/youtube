@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import { updateVideo } from "../../redux/slice/videos/updateVideoSlice";
 import { PlusOutlined } from "@ant-design/icons";
 import { getYourVideos } from "../../redux/slice/dashboard/GetYourVideosSlice";
+import useMessage from "../../utils/useMessage";
 const { TextArea } = Input;
 
 const VideoUpdate = (props) => {
@@ -24,6 +25,7 @@ const VideoUpdate = (props) => {
     callGetYourVideos,
     Data, // Old video details coming from props
   } = props;
+  const { showMessage } = useMessage();
 
   const [thumbnailFile, setThumbnailFile] = useState(); // New uploaded thumbnail file
   const [selectedThumbnail, setSelectedThumbnail] = useState("old"); // To track selected thumbnail (old or new)
@@ -87,11 +89,14 @@ const VideoUpdate = (props) => {
       // API call to update video
       setIsLoading(true);
       const response = await callUpdateVideo({ videoId, formData });
+      if (response.type == "updateVideo/fulfilled") {
+        showMessage("success", "Video Updated Successfully", 2);
+      }
       await callGetYourVideos();
       setIsLoading(false);
       setIsVisible(false); // Close the modal
     } catch (error) {
-      console.error("Error updating video:", error);
+      showMessage("error", error, 2);
       setIsLoading(false);
     }
   };

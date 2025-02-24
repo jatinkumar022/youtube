@@ -7,6 +7,7 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import { Button, Form, Input, Popconfirm, Popover } from "antd";
 import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { MdDeleteOutline } from "react-icons/md";
+import useMessage from "./useMessage";
 
 export const TweetCard = (props) => {
   const {
@@ -24,6 +25,7 @@ export const TweetCard = (props) => {
     getUserTweets,
     callGetTweets,
   } = props;
+  const { showMessage } = useMessage();
   const [newComment, setNewComment] = useState();
   const [comments, setComments] = useState();
   const [editedCommentText, setEditedCommentText] = useState();
@@ -43,7 +45,7 @@ export const TweetCard = (props) => {
       };
       handleGetComments();
     } catch (error) {
-      console.log(error);
+      showMessage("error", error, 2);
     }
   }, []);
 
@@ -60,7 +62,7 @@ export const TweetCard = (props) => {
         setNewComment("");
       }
     } catch (error) {
-      console.log(error);
+      showMessage("error", error, 2);
     }
   };
   const handleClickOutside = (event) => {
@@ -101,7 +103,7 @@ export const TweetCard = (props) => {
       setComments(getComments?.payload?.data?.comments);
       setEditingCommentId(null); // Reset the editing state
     } catch (error) {
-      console.log(error);
+      showMessage("error", error, 2);
     }
   };
 
@@ -113,7 +115,7 @@ export const TweetCard = (props) => {
       setComments(getComments?.payload?.data?.comments);
       setEditingCommentId(null); // Reset the editing state
     } catch (error) {
-      console.log(error);
+      showMessage("error", error, 2);
     }
   };
   //Tweets
@@ -145,20 +147,24 @@ export const TweetCard = (props) => {
     try {
       const response = await callDeleteTweet(tweetId);
       if (response?.type === "deleteTweet/fulfilled") {
-        const result = await getUserTweets();
+        showMessage("error", "Tweet deleted", 2);
+        await getUserTweets();
       }
     } catch (error) {
-      console.error("Error deleting tweet:", error);
+      showMessage("error", error, 2);
     }
   };
 
   const handleUpdateTweet = async (updatedTweet) => {
     try {
       const response = await callUpdateTweet(updatedTweet);
-
-      const result = await getUserTweets();
+      if (response?.type === "updateTweet/fulfilled") {
+        showMessage("success", "Tweet Updated Successfully", 2);
+        await getUserTweets();
+      }
+      getUserTweets();
     } catch (error) {
-      console.log("Error updating tweet:", error);
+      showMessage("error", error, 2);
     }
   };
 

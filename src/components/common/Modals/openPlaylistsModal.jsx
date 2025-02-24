@@ -7,6 +7,7 @@ import { getUserPlaylists } from "../../../redux/slice/playlist/getUserPlaylists
 import { defaultPlaylist } from "../../../assets";
 import { getCurrentUser } from "../../../redux/slice/users/getCurrentUserSlice";
 import { addVideoToPlaylist } from "../../../redux/slice/playlist/addVideoToPlaylistSlice";
+import useMessage from "../../../utils/useMessage";
 
 const PlaylistSelectModal = ({
   isVisible,
@@ -21,6 +22,7 @@ const PlaylistSelectModal = ({
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
   const navigate = useNavigate();
   const playlists = callGetUserPlaylistsData?.getUserPlaylistsData?.data;
+  const { showMessage } = useMessage();
 
   // Handle playlist card click to set selected playlist ID
   const handleSelectPlaylist = (id) => {
@@ -34,7 +36,7 @@ const PlaylistSelectModal = ({
         try {
           await callGetCurrentUser;
         } catch (error) {
-          console.log(error);
+          showMessage("error", error);
         }
       };
       getCurrentUser;
@@ -47,7 +49,7 @@ const PlaylistSelectModal = ({
         getPlaylists();
       }
     } catch (error) {
-      console.log(error);
+      showMessage("error", error);
     }
   }, []);
 
@@ -59,14 +61,16 @@ const PlaylistSelectModal = ({
             videoId,
             playlistId: selectedPlaylistId,
           });
-          console.log(response);
+          if (response.type === "addVideoToPlaylist/fulfilled") {
+            showMessage("success", "Video added to Playlist");
+          }
         }
       } catch (error) {
-        console.log(error);
+        showMessage("error", error);
       }
       closeModal();
     } else {
-      alert("Please select a playlist.");
+      showMessage("error", "Please select a playlist.");
     }
   };
   return (

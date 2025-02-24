@@ -1,4 +1,3 @@
-import channel from "../../assets/thumbnails/channel.jpg";
 import { useNavigate } from "react-router";
 import { formatSubscribers } from "../../utils/subscriberCount";
 

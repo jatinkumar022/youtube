@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Img from "../../assets/thumbnails/3.jpg"; // Video thumbnail
-import channel from "../../assets/thumbnails/channel.jpg";
-import sample from "../../assets/video/sample.mp4";
 import UserComponent from "./UserPage";
-import PlaylistImg from "../../assets/thumbnails/1.jpg"; // Playlist thumbnail
 import { useNavigate } from "react-router";
 import { logout } from "../../redux/slice/users/logoutSlice";
-import { getCurrentUser } from "../../redux/slice/users/getCurrentUserSlice";
 import { connect } from "react-redux";
 import { getLikedVideos } from "../../redux/slice/likes/getLikedVideosSlice";
 import { getUserPlaylists } from "../../redux/slice/playlist/getUserPlaylists";
 import UserLoader from "../../components/Loaders/UserLoader";
+import useMessage from "../../utils/useMessage";
+import { getWatchHistory } from "../../redux/slice/users/getWatchHistorySlice";
 
 const UserPage = (props) => {
   const {
@@ -20,10 +17,12 @@ const UserPage = (props) => {
     callGetUserPlaylists,
     callGetUserPlaylistsData,
     callGetCurrentUserData,
+    callGetWatchHistory,
+    callGetWatchHistoryData,
   } = props;
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-
+  const { showMessage } = useMessage();
   const handleLogout = async () => {
     try {
       const response = await callLogout();
@@ -32,6 +31,18 @@ const UserPage = (props) => {
       alert(error);
     }
   };
+
+  // Watch history
+  useEffect(() => {
+    const getWatchHistory = async () => {
+      try {
+        const response = await callGetWatchHistory();
+      } catch (error) {
+        showMessage("error", error);
+      }
+    };
+    getWatchHistory();
+  }, []);
 
   // Playlists
   useEffect(() => {
@@ -51,7 +62,8 @@ const UserPage = (props) => {
         setLoading(false);
       }
     } catch (error) {
-      console.log(error);
+      showMessage("error", error, 2);
+
       setLoading(false);
     }
   }, []);
@@ -74,6 +86,7 @@ const UserPage = (props) => {
       user={callGetCurrentUserData.getCurrentUserData.user}
       LikedVideos={callLikedVideosData?.getLikedVideosData?.message}
       getPlaylists={getPlaylists}
+      watchHistory={callGetWatchHistoryData?.getWatchHistoryData?.data}
     />
   );
 };
@@ -84,6 +97,7 @@ const mapStateToProps = (state) => {
     callGetCurrentUserData: state.getCurrentUserData,
     callLikedVideosData: state.getLikedVideosData,
     callGetUserPlaylistsData: state.getUserPlaylistsData,
+    callGetWatchHistoryData: state.getWatchHistoryData,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -91,6 +105,7 @@ const mapDispatchToProps = (dispatch) => {
     callLogout: () => dispatch(logout()),
     callLikedVideos: () => dispatch(getLikedVideos()),
     callGetUserPlaylists: (userId) => dispatch(getUserPlaylists(userId)),
+    callGetWatchHistory: () => dispatch(getWatchHistory()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(UserPage);

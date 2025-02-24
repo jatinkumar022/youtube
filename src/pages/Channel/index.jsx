@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Img from "../../assets/thumbnails/3.jpg"; // Video thumbnail
-import channel from "../../assets/thumbnails/channel.jpg";
-import sample from "../../assets/video/sample.mp4";
 
-import PlaylistImg from "../../assets/thumbnails/1.jpg"; // Playlist thumbnail
 import ChannelComponent from "./ChannelPage";
 import { useParams } from "react-router";
 import { connect } from "react-redux";
@@ -12,9 +8,11 @@ import { getChannelVideos } from "../../redux/slice/videos/getChannelVideosSlice
 import { toggleSubscribe } from "../../redux/slice/subscription/toggleSubscribeSlice";
 import { getUserPlaylists } from "../../redux/slice/playlist/getUserPlaylists";
 import ChannelLoader from "../../components/Loaders/ChannelLoader";
+import useMessage from "../../utils/useMessage";
 
 const ChannelPage = (props) => {
   const { username } = useParams();
+  const { showMessage } = useMessage();
   const {
     callGetChannel,
     callGetChannelData,
@@ -42,7 +40,7 @@ const ChannelPage = (props) => {
       getChannelInfo();
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      showMessage("error", error, 2);
       setLoading(false);
     }
   }, [username]);
@@ -72,7 +70,8 @@ const ChannelPage = (props) => {
         setMostViewedVideos(sortedMostViewedVideos);
         setLoading(false);
       } catch (error) {
-        console.log(error);
+        showMessage("error", error, 2);
+
         setLoading(false);
       }
     };
@@ -83,8 +82,10 @@ const ChannelPage = (props) => {
   }, []);
 
   const handleSubscribe = async (userId) => {
+    console.log("object");
     try {
       const response = await callToggleSubscribe(userId);
+      console.log(response);
       callGetChannel(username);
     } catch (error) {}
   };

@@ -6,12 +6,14 @@ import { useLocation, useNavigate } from "react-router";
 import VideoUploadPage from "../components/upload/VideoUploadPage";
 import { connect } from "react-redux";
 import { getSubscribedChannels } from "../redux/slice/subscription/getSubscribedChannelsSlice";
+import useMessage from "../utils/useMessage";
 
 const AppLayout = ({
   children,
   callGetSubscribedChannels,
   callGetSubscribedChannelsData,
 }) => {
+  const { showMessage } = useMessage();
   const [size, setSize] = useState([window.innerWidth, window.innerHeight]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const location = useLocation();
@@ -58,7 +60,7 @@ const AppLayout = ({
           const response = await callGetSubscribedChannels();
         }
       } catch (error) {
-        console.log(error);
+        showMessage("error", error, 2);
       }
     };
     getSubscriptions();

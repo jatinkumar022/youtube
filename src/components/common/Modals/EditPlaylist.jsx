@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal, Form, Input } from "antd";
 import { connect } from "react-redux";
 import { updatePlaylist } from "../../../redux/slice/playlist/updatePlaylistSlice";
+import useMessage from "../../../utils/useMessage";
 
 const EditPlaylistModal = ({
   open,
@@ -10,7 +11,8 @@ const EditPlaylistModal = ({
   PlaylistInfo,
   handleEditOk,
 }) => {
-  const [form] = Form.useForm(); // Ant Design Form instance for managing form state
+  const [form] = Form.useForm();
+  const { showMessage } = useMessage();
 
   // Handle form submission
   const onFinish = async (values) => {
@@ -20,9 +22,12 @@ const EditPlaylistModal = ({
         content: values,
       };
       const response = await callUpdatePlaylist(data);
+      if (response.type === "updatePlaylist/fulfilled") {
+        showMessage("success", "Playlist updated");
+      }
       await handleEditOk();
     } catch (error) {
-      console.log(error);
+      showMessage("error", error);
     }
     form.resetFields(); // Reset the form fields after submission
     closeModal(); // Close the modal after submission

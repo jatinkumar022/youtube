@@ -5,6 +5,7 @@ import { logIn } from "../../redux/slice/users/loginSlice";
 import { useForm } from "react-hook-form";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router";
+import useMessage from "../../utils/useMessage";
 
 const isEmail = (input) => {
   // Regular expression to match a valid email
@@ -13,6 +14,8 @@ const isEmail = (input) => {
 };
 
 const LoginPage = (props) => {
+  const { showMessage } = useMessage();
+
   const { callLogIn, callLogInData } = props;
   const navigate = useNavigate();
   const cookie = new Cookies();
@@ -35,16 +38,16 @@ const LoginPage = (props) => {
 
       const response = await callLogIn(updatedData);
       if (response.type === "logIn/fulfilled") {
-        alert("Login success");
         cookie.set("accessToken", response?.payload?.data?.accessToken);
         cookie.set("refreshToken", response?.payload?.data?.refreshToken);
+        showMessage("success", "Login successful!", 2);
         navigate("/");
       }
       if (response.type === "logIn/rejected") {
-        alert(response.error.message);
+        showMessage("error", response.error.message);
       }
     } catch (error) {
-      console.error("Error in handleLogin:", error);
+      showMessage("error", error);
     }
   };
   return (

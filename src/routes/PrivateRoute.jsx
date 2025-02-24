@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { connect } from "react-redux";
 import { getCurrentUser } from "../redux/slice/users/getCurrentUserSlice";
+import useMessage from "../utils/useMessage";
 
 const PrivateRoute = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { callGetCurrentUser, currentUserData, isUserLoading, children } =
     props;
   const navigate = useNavigate();
-
+  const { showMessage } = useMessage();
   useEffect(() => {
     // Check if user data already exists in Redux state
     if (!currentUserData.data) {
@@ -16,12 +17,17 @@ const PrivateRoute = (props) => {
       const checkAuth = async () => {
         try {
           const response = await callGetCurrentUser();
+
           if (response.type === "getCurrentUser/fulfilled") {
             // If successful, set authenticated state
             setIsAuthenticated(true);
+          } else {
+            navigate("/login");
           }
         } catch (error) {
           setIsAuthenticated(false);
+          showMessage("error", error, 2);
+
           navigate("/login"); // Redirect to login if authentication fails
         }
       };
@@ -29,6 +35,7 @@ const PrivateRoute = (props) => {
     } else {
       // If user data already exists in Redux, set authenticated state
       setIsAuthenticated(true);
+      navigate("/login"); // Redirect to login if authentication fails
     }
   }, []);
 

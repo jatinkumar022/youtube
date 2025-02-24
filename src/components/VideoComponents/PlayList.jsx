@@ -7,10 +7,10 @@ import { connect } from "react-redux";
 import { mergeVideoAndPlaylists } from "../../utils/mergeVideoAndPlaylists";
 import { useShowMore } from "../../utils/useShowMore";
 import { formatTime, timesAgo } from "../../utils/timeAgo";
-import { Popconfirm, Popover } from "antd";
-import { MdDeleteOutline } from "react-icons/md";
+import { Popover } from "antd";
 import { IoMdMore, IoMdPlay } from "react-icons/io";
 import PlaylistSelectModal from "../common/Modals/openPlaylistsModal";
+import useMessage from "../../utils/useMessage";
 
 const PlayList = ({
   callGetAllVideosData,
@@ -21,6 +21,7 @@ const PlayList = ({
   const navigate = useNavigate();
   const [isModalVisible, setModalVisible] = useState(false);
   const VideosData = callGetAllVideosData?.getAllVideosData?.data?.videos;
+  const { showMessage } = useMessage();
 
   const updatedVideo = VideosData?.map((video) => {
     return Object.assign({}, video, { type: "video" });
@@ -33,7 +34,7 @@ const PlayList = ({
       try {
         const response = await callGetAllVideos();
       } catch (error) {
-        console.log(error);
+        showMessage("error", error);
       }
     };
     handleGetAllVideos();
@@ -44,7 +45,7 @@ const PlayList = ({
       try {
         const response = await callGetChannelPlaylists();
       } catch (error) {
-        console.log(error);
+        showMessage("error", error);
       }
     };
     handleGetChannelPlaylists();

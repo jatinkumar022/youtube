@@ -16,6 +16,10 @@ import { likeVideo } from "../../redux/slice/likes/likeVideoSlice";
 import { toggleSubscribe } from "../../redux/slice/subscription/toggleSubscribeSlice";
 import { formatSubscribers } from "../../utils/subscriberCount";
 import PlaylistSelectModal from "../common/Modals/openPlaylistsModal";
+import useMessage from "../../utils/useMessage";
+import VideoLoader from "../Loaders/VideoLoader";
+import ShareModal from "./ShareButton";
+import { incrementVideoView } from "../../redux/slice/videos/incrementVideoViewSlice";
 
 const linkifyOptions = {
   defaultProtocol: "https",
@@ -41,7 +45,7 @@ const VideoTemplate = (props) => {
     callGetChannel,
     callGetChannelData,
     callToggleSubscribe,
-    setLoading,
+    callIncrementVideoView,
   } = props;
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
@@ -49,6 +53,8 @@ const VideoTemplate = (props) => {
   const Channel = callGetChannelData?.getChannelData?.data;
   const [isModalVisible, setModalVisible] = useState(false);
   const [open, setOpen] = useState(false);
+  const { showMessage } = useMessage();
+  const [loading, setLoading] = useState(true);
 
   const handleOpen = () => {
     setOpen((prev) => !prev);
@@ -64,13 +70,13 @@ const VideoTemplate = (props) => {
           const response = await callGetVideoById(videoId);
           console.log(response);
         } else {
-          console.log("Invalid Video or video not found");
+          showMessage("error", "Invalid Video or video not found");
         }
       };
       getVideoDetails();
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      showMessage("error", error);
       setLoading(false);
     }
   }, [location?.pathname]);
@@ -82,7 +88,7 @@ const VideoTemplate = (props) => {
       };
       getChannelInfo();
     } catch (error) {
-      console.log(error);
+      showMessage("error", error);
     }
   }, [Video?.owner]);
 
@@ -91,7 +97,7 @@ const VideoTemplate = (props) => {
       try {
         const response = await callIsLikedVideo(videoId);
       } catch (error) {
-        console.log(error);
+        showMessage("error", error);
       }
     };
     handleGetLikesStatus();
@@ -99,6 +105,7 @@ const VideoTemplate = (props) => {
 
   const handleLikeClick = async (videoId) => {
     const response = await callLikeVideoAction(videoId);
+
     await callIsLikedVideo(videoId);
   };
   // Toggle between expanded and collapsed states
@@ -106,11 +113,31 @@ const VideoTemplate = (props) => {
 
   const handleSubscribe = async (userId) => {
     const response = await callToggleSubscribe(userId);
+
     callGetChannel(Video?.owner?.username);
+  };
+
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(
+        callGetVideoByIdData?.getVideoByIdData?.data?.videoFile
+      );
+      const blob = await response.blob();
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = callGetVideoByIdData?.getVideoByIdData?.data?.title; // You can specify the name of the downloaded file
+      link.click();
+      window.URL.revokeObjectURL(link.href); // Clean up the URL object
+    } catch (error) {
+      console.error("Error downloading the file:", error);
+    }
   };
   const content = (
     <div className="dark:bg-[#212121] p-3 dark:text-white  rounded-md">
-      <div className="  min-[450px]:max-[640px]:hidden min-[1040px]:hidden    w-full p-3 flex items-center gap-2 cursor-pointer text-[#575757] dark:text-[#b6b5b5] ">
+      <div
+        className="  min-[450px]:max-[640px]:hidden min-[1040px]:hidden w-full p-3 flex items-center gap-2 cursor-pointer text-[#575757] dark:text-[#b6b5b5] "
+        onClick={handleDownload}
+      >
         <TfiDownload size={18} />
         Download
       </div>
@@ -126,24 +153,41 @@ const VideoTemplate = (props) => {
       </div>
     </div>
   );
+
+  // video Views count
+  useEffect(() => {
+    if (Video && Video._id) {
+      const timer = setTimeout(() => {
+        callIncrementVideoView(Video._id)
+          .unwrap()
+          .then((updatedVideo) => {
+            console.log("Video view incremented:", updatedVideo);
+          })
+          .catch((error) => {
+            console.error("Error incrementing video view:", error);
+          });
+      }, 3000); // 30 seconds timer
+
+      return () => clearTimeout(timer);
+    }
+  }, [Video, callIncrementVideoView]);
+
   return (
     <>
-      {callGetVideoByIdData?.getVideoByIdData ? (
+      {callGetVideoByIdData?.getVideoByIdData ?? !loading ? (
         <div className="w-full">
           <div
             className="relative w-full rounded-lg "
             style={{ paddingBottom: "56.25%" /* 16:9 aspect ratio */ }}
           >
             <iframe
-              src={`https://player.cloudinary.com/embed/?public_id=${extractPublicId(
-                Video?.videoFile
-              )}&cloud_name=jatinramani022&profile=Video%20default&autoplay=1&title=${
-                Video?.title
-              }`}
+              src={`https://player.cloudinary.com/embed/?public_id=${
+                Video ? extractPublicId(Video?.videoFile) : ""
+              }&cloud_name=dvwnrzsjh&profile=Video`}
               // src={`https://player.cloudinary.com/embed/?public_id=rh9osdftezovbbgtio2l&cloud_name=jatinramani022&profile=Video%20default&autoplay=1 [title]=${items[0].title}`}
               allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-              undefined
-              allowFullScreen
+              allowfullscreen
+              frameborder="0"
               className="rounded-xl absolute  w-full h-full left-0"
             ></iframe>
           </div>
@@ -153,8 +197,7 @@ const VideoTemplate = (props) => {
             <h1 className="font-semibold text-lg py-1 roboto-bold">
               {Video?.title}
             </h1>
-            {/* profile  */}
-            <div className="flex sm:items-center flex-col sm:flex-row py-4  justify-between gap-3">
+            <div className="flex sm:items-center flex-col sm:flex-row py-4 justify-between gap-3">
               <div className="flex items-center gap-3 w-full ">
                 {/* Avatar */}
                 <div
@@ -220,17 +263,23 @@ const VideoTemplate = (props) => {
                       )}
                     </button>
                   </div>
-                  <div className="flex rounded-r-full  px-4 h-full gap-2 items-center bg-[#f2f2f2] hover:bg-[#e6e6e6] dark:bg-[#272727] hover:dark:bg-[#373737]">
+                  <div className="flex rounded-r-full px-4 h-full gap-2 items-center bg-[#f2f2f2] hover:bg-[#e6e6e6] dark:bg-[#272727] hover:dark:bg-[#373737]">
                     <button>
                       <GrDislike size={18} />
                     </button>
                   </div>
                 </div>
-                <button className="flex   gap-2 items-center px-5 py-[8px] text-[14px] font-[600] rounded-full bg-[#f2f2f2] hover:bg-[#e6e6e6]  dark:bg-[#272727] hover:dark:bg-[#373737]">
-                  <PiShareFatLight size={18} /> Share
+                <button>
+                  <ShareModal
+                    url={`http://localhost:5173/video/${videoId}`}
+                    title="Check out this awesome content!"
+                  />
                 </button>
 
-                <button className="hidden min-[450px]:max-[640px]:flex min-[1040px]:flex  gap-2 items-center px-5 py-[8px] text-[14px] font-[600] rounded-full bg-[#f2f2f2] hover:bg-[#e6e6e6]  dark:bg-[#272727] hover:dark:bg-[#373737]">
+                <button
+                  className="hidden min-[450px]:max-[640px]:flex min-[1040px]:flex  gap-2 items-center px-5 py-[8px] text-[14px] font-[600] rounded-full bg-[#f2f2f2] hover:bg-[#e6e6e6]  dark:bg-[#272727] hover:dark:bg-[#373737]"
+                  onClick={handleDownload}
+                >
                   <TfiDownload size={18} />
                   Download
                 </button>
@@ -256,7 +305,7 @@ const VideoTemplate = (props) => {
                 />
               </div>
             </div>
-            <div className="w-full text-[14px] relative  rounded-xl bg-[#f2f2f2]   dark:bg-[#272727] cursor-pointer p-2 px-4">
+            <div className="w-full text-[14px] relative  rounded-xl bg-[#f2f2f2] dark:bg-[#272727] cursor-pointer p-2 px-4">
               <div className="font-[550] flex gap-2 flex-wrap">
                 <p>{formatSubscribers(Video?.views)} views</p>
                 <p>{timesAgo(Video?.createdAt)}</p>
@@ -281,7 +330,9 @@ const VideoTemplate = (props) => {
           </div>
         </div>
       ) : (
-        <></>
+        <>
+          <VideoLoader />
+        </>
       )}
     </>
   );
@@ -301,6 +352,7 @@ const mapDispatchToProps = (dispatch) => {
     callIsLikedVideo: (videoId) => dispatch(isLikedVideo(videoId)),
     callLikeVideoAction: (videoId) => dispatch(likeVideo(videoId)),
     callToggleSubscribe: (userId) => dispatch(toggleSubscribe(userId)),
+    callIncrementVideoView: (videoId) => dispatch(incrementVideoView(videoId)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(VideoTemplate);

@@ -3,7 +3,7 @@ import { api } from "../../../utils/useApi";
 
 export const addVideoToPlaylist = createAsyncThunk("addVideoToPlaylist", async (data) => {
   try {
-    console.log(data)
+
     const response = await api.patch(
       `/playlist/add/${data.videoId}/${data.playlistId}`,
 

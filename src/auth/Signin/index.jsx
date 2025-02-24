@@ -7,8 +7,10 @@ import { useForm } from "react-hook-form";
 import { logIn } from "../../redux/slice/users/loginSlice";
 import { useNavigate } from "react-router";
 import { Cookies } from "react-cookie";
+import useMessage from "../../utils/useMessage";
 
 const SigninPage = (props) => {
+  const { showMessage } = useMessage();
   const { callSignIn, callSignInData, callLogIn } = props;
   const {
     control,
@@ -39,17 +41,17 @@ const SigninPage = (props) => {
         try {
           const loginRes = await callLogIn(loginData);
           if (loginRes.type === "logIn/fulfilled") {
-            alert("Login success");
             cookie.set("accessToken", loginRes?.payload?.data?.accessToken);
             cookie.set("refreshToken", loginRes?.payload?.data?.refreshToken);
+            showMessage("success", "Login successful!", 2);
             navigate("/");
           }
         } catch (error) {
-          console.log("Error while login:", error);
+          showMessage("error", error);
         }
       }
     } catch (error) {
-      console.error("Error while sigh up:", error);
+      showMessage("error", error);
     }
   };
 

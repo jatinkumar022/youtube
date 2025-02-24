@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal, Form, Input } from "antd";
 import { createPlaylist } from "../../../redux/slice/playlist/createPlaylistSlice";
 import { connect } from "react-redux";
+import useMessage from "../../../utils/useMessage";
 
 const PlaylistModal = ({
   open,
@@ -10,14 +11,18 @@ const PlaylistModal = ({
   getPlaylists,
 }) => {
   const [form] = Form.useForm(); // Ant Design Form instance for managing form state
+  const { showMessage } = useMessage();
 
   // Handle form submission
   const onFinish = async (values) => {
     try {
       const response = await callCreatePlaylist(values);
-      await getPlaylists();
+      if (response.type === "createPlaylist/fulfilled") {
+        showMessage("success", "Playlist Created");
+        await getPlaylists();
+      }
     } catch (error) {
-      console.log(error);
+      showMessage("error", error);
     }
     form.resetFields(); // Reset the form fields after submission
     closeModal(); // Close the modal after submission

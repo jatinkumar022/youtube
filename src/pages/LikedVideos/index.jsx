@@ -4,10 +4,12 @@ import LikedVideosPage from "./LikedVideosPage";
 import { getLikedVideos } from "../../redux/slice/likes/getLikedVideosSlice";
 import { connect } from "react-redux";
 import PlayListLoader from "../../components/Loaders/PlaylistLoader";
+import useMessage from "../../utils/useMessage";
 
 const LikedVideos = (props) => {
   const { callLikedVideos, callLikedVideosData } = props;
   const [loading, setLoading] = useState();
+  const { showMessage } = useMessage();
   useEffect(() => {
     const handleGetLikedVideos = async () => {
       try {
@@ -15,7 +17,8 @@ const LikedVideos = (props) => {
         const response = await callLikedVideos();
         setLoading(false);
       } catch (error) {
-        console.log(error);
+        showMessage("error", error, 2);
+
         setLoading(false);
       }
     };

@@ -3,6 +3,7 @@ import HomeComponent from "./Homepage";
 import { getAllVideos } from "../../redux/slice/videos/getAllVideoSlice";
 import { connect } from "react-redux";
 import { getChannelPlaylists } from "../../redux/slice/playlist/getChannelPlaylistsSlice";
+import useMessage from "../../utils/useMessage";
 
 const Homepage = (props) => {
   const {
@@ -11,6 +12,7 @@ const Homepage = (props) => {
     callGetChannelPlaylists,
     callGetChannelPlaylistsData,
   } = props;
+  const { showMessage } = useMessage();
   const [loading, setLoading] = useState(true); // Add loading state
 
   const VideosData = callGetAllVideosData?.getAllVideosData?.data?.videos;
@@ -24,9 +26,11 @@ const Homepage = (props) => {
       try {
         setLoading(true);
         const response = await callGetAllVideos();
+
         setLoading(false);
       } catch (error) {
-        console.log(error);
+        showMessage("error", error, 2);
+
         setLoading(false);
       }
     };
@@ -38,9 +42,11 @@ const Homepage = (props) => {
       try {
         setLoading(true);
         const response = await callGetChannelPlaylists();
+
         setLoading(false);
       } catch (error) {
-        console.log(error);
+        showMessage("error", error, 2);
+
         setLoading(false);
       }
     };

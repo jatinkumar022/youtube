@@ -53,7 +53,7 @@ api.interceptors.response.use(
 
         if (!refreshToken) {
           console.error("Refresh token not available");
-          alert("Refresh token not available");
+
         }
 
         // Request new access token
@@ -87,7 +87,7 @@ api.interceptors.response.use(
 // Utility function to clear tokens and redirect to the login page
 const removeTokensAndRedirect = () => {
   ["accessToken", "refreshToken"].forEach(removeToken);
-  window.location.href = "/login";
+  // window.location.href = "/login";
 };
 
 export { api };

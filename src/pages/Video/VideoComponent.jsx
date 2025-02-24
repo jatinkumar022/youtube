@@ -10,10 +10,8 @@ import { getComments } from "../../redux/slice/comments/getCommentsSlice";
 import { Form } from "antd";
 import { updateComment } from "../../redux/slice/comments/updateCommentSlice";
 import { deleteComment } from "../../redux/slice/comments/deleteCommentSlice";
-import { isLikedVideo } from "../../redux/slice/likes/isLikedVideoSlice";
-import { isLikedComment } from "../../redux/slice/likes/isLikedCommentSlice";
-import { toggleSubscribe } from "../../redux/slice/subscription/toggleSubscribeSlice";
-import VideoLoader from "../../components/Loaders/VideoLoader";
+
+import useMessage from "../../utils/useMessage";
 
 const VideoComponent = (props) => {
   const {
@@ -26,11 +24,11 @@ const VideoComponent = (props) => {
     callUpdateComment,
     callDeleteComment,
   } = props;
+  const { showMessage } = useMessage();
   const [isWideScreen, setIsWideScreen] = useState(window.innerWidth > 1200);
   const [isEditing, setIsEditing] = useState();
   const [form] = Form.useForm();
   const [formEdit] = Form.useForm();
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const handleResize = () => {
@@ -48,7 +46,7 @@ const VideoComponent = (props) => {
       };
       handleGetComments();
     } catch (error) {
-      console.log(error);
+      showMessage("error", error, 2);
     }
   }, []);
 
@@ -60,7 +58,7 @@ const VideoComponent = (props) => {
         await callGetComments(videoId);
         form.resetFields();
       } catch (error) {
-        console.log(error);
+        showMessage("error", error, 2);
       }
     }
   };
@@ -73,7 +71,7 @@ const VideoComponent = (props) => {
 
         setIsEditing(false);
       } catch (error) {
-        console.log(error);
+        showMessage("error", error, 2);
       }
     }
   };
@@ -83,56 +81,52 @@ const VideoComponent = (props) => {
       const response = await callDeleteComment(commentId);
       await callGetComments(videoId);
     } catch (error) {
-      console.log(error);
+      showMessage("error", error, 2);
     }
   };
 
   //  =========================Subscribe
   return (
     <>
-      {loading ? (
-        <VideoLoader />
-      ) : (
-        <div className="p-3 px-5 flex gap-5 h-full w-full">
-          <div className="w-full">
-            <VideoTemplate videoId={videoId} setLoading={setLoading} />
-            {/* Pass video source here */}
-            {isWideScreen ? (
-              <></>
-            ) : (
-              <div>
-                <PlayList />
-              </div>
-            )}
-            <div>
-              <UserComment
-                currentUser={callCurrentUserData?.getCurrentUserData?.user}
-                handleAddComment={handleAddComment}
-                form={form}
-                commentsCount={
-                  callGetCommentsData?.getCommentsData?.data?.comments
-                }
-              />
-              <Comments
-                Comments={callGetCommentsData?.getCommentsData?.data?.comments}
-                User={callCurrentUserData?.getCurrentUserData?.user}
-                handleEditComment={handleEditComment}
-                form={formEdit}
-                isEditing={isEditing}
-                setIsEditing={setIsEditing}
-                handleDeleteComment={handleDeleteComment}
-              />
-            </div>
-          </div>
+      <div className="p-3 px-5 flex gap-5 h-full w-full">
+        <div className="w-full">
+          <VideoTemplate videoId={videoId} />
+          {/* Pass video source here */}
           {isWideScreen ? (
-            <div className="flex flex-col gap-3">
+            <></>
+          ) : (
+            <div>
               <PlayList />
             </div>
-          ) : (
-            <></>
           )}
+          <div>
+            <UserComment
+              currentUser={callCurrentUserData?.getCurrentUserData?.user}
+              handleAddComment={handleAddComment}
+              form={form}
+              commentsCount={
+                callGetCommentsData?.getCommentsData?.data?.comments
+              }
+            />
+            <Comments
+              Comments={callGetCommentsData?.getCommentsData?.data?.comments}
+              User={callCurrentUserData?.getCurrentUserData?.user}
+              handleEditComment={handleEditComment}
+              form={formEdit}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              handleDeleteComment={handleDeleteComment}
+            />
+          </div>
         </div>
-      )}
+        {isWideScreen ? (
+          <div className="flex flex-col gap-3">
+            <PlayList />
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
     </>
   );
 };

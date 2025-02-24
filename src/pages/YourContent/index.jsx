@@ -17,6 +17,7 @@ import { isLikedTweet } from "../../redux/slice/likes/isLikedTweetSlice";
 import { likeTweet } from "../../redux/slice/likes/likeTweetSlice";
 import TweetpageLoader from "../../components/Loaders/TweetPageLoader";
 import VideoListLoader from "../../components/Loaders/VideoListLoader";
+import useMessage from "../../utils/useMessage";
 
 const YourContent = (props) => {
   const [searchParams] = useSearchParams();
@@ -37,7 +38,7 @@ const YourContent = (props) => {
   const [editTweetForm] = Form.useForm();
   const [isTweetLoading, setIsTweetLoading] = useState(true);
   const [isVideoLoading, setIsVideoLoading] = useState(true);
-
+  const { showMessage } = useMessage();
   const handleMenuClick = (e) => {
     setSelected(e.key);
   };
@@ -94,7 +95,8 @@ const YourContent = (props) => {
 
         // const response = await
       } catch (error) {
-        console.log("Error while getting tweets", error);
+        showMessage("error", error, 2);
+
         setIsTweetLoading(false);
       }
     };
@@ -106,7 +108,9 @@ const YourContent = (props) => {
     try {
       const handleUploadTweet = async () => {
         const response = await callUploadTweet(data);
-        if (response?.payload?.message) {
+
+        if (response.type == "uploadTweet/fulfilled") {
+          showMessage("success", "Tweet Uploaded Successfully", 2);
           const response2 = await callGetTweets(
             callCurrentUserData.getCurrentUserData.user._id
           );
@@ -116,7 +120,7 @@ const YourContent = (props) => {
       };
       handleUploadTweet();
     } catch (error) {
-      console.log(error);
+      showMessage("error", error, 2);
     }
   };
 
@@ -133,7 +137,7 @@ const YourContent = (props) => {
       }
       // const response = await
     } catch (error) {
-      console.log("Error while getting tweets", error);
+      showMessage("error", error, 2);
     }
   };
   // Videos
@@ -144,7 +148,8 @@ const YourContent = (props) => {
         const response = await callGetYourVideos();
         setIsVideoLoading(false);
       } catch (error) {
-        console.log(error);
+        showMessage("error", error, 2);
+
         setIsVideoLoading(false);
       }
     };

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ViewPlaylistComponent from "./ViewPlaylistPage";
-import channel from "../../assets/thumbnails/channel.jpg";
-import sample from "../../assets/video/sample.mp4";
-import Img from "../../assets/thumbnails/3.jpg"; // Video thumbnail
-import PlaylistImg from "../../assets/thumbnails/1.jpg";
+
 import EmptyPlaylist from "./EmptyPlaylist";
 import { useNavigate, useParams } from "react-router";
 import { connect } from "react-redux";
@@ -11,6 +8,7 @@ import { getPlaylistById } from "../../redux/slice/playlist/getPlaylistByIdSlice
 import { addVideoToPlaylist } from "../../redux/slice/playlist/addVideoToPlaylistSlice";
 import { deletePlaylist } from "../../redux/slice/playlist/deletePlaylistSlice";
 import PlayListLoader from "../../components/Loaders/PlaylistLoader";
+import useMessage from "../../utils/useMessage";
 
 const ViewPlaylistPage = (props) => {
   const {
@@ -23,7 +21,7 @@ const ViewPlaylistPage = (props) => {
   const navigate = useNavigate();
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [loading, setLoading] = useState();
-
+  const { showMessage } = useMessage();
   useEffect(() => {
     const getPlaylistInfo = async () => {
       try {
@@ -33,7 +31,8 @@ const ViewPlaylistPage = (props) => {
           setLoading(false);
         }
       } catch (error) {
-        console.log(error);
+        showMessage("error", error, 2);
+
         setLoading(false);
       }
     };
@@ -63,12 +62,15 @@ const ViewPlaylistPage = (props) => {
     setIsDeleteModalVisible(false);
   };
   const handleDelete = async (id) => {
-    console.log(id);
     try {
-      await callDeletePlaylist(id);
+      const response = await callDeletePlaylist(id);
+      if (response.type === "deletePlaylist/fulfilled") {
+        showMessage("error", "Playlist Deleted");
+        await getPlaylistInfo();
+      }
       navigate(-1);
     } catch (error) {
-      console.log(error);
+      showMessage("error", error, 2);
     }
     closeDeleteModal();
   };
@@ -83,7 +85,10 @@ const ViewPlaylistPage = (props) => {
 
     const response = await callAddVideoToPlaylist(data);
 
-    await getPlaylistInfo();
+    if (response.type === "addVideoToPlaylist/fulfilled") {
+      showMessage("success", "Video added to Playlist");
+      await getPlaylistInfo();
+    }
     setLoading(false);
   };
 

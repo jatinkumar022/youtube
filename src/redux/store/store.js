@@ -24,6 +24,8 @@ import deleteVideoSlice from "../slice/videos/deleteVideoSlice"
 import togglePublishSlice from "../slice/videos/togglePublishSlice"
 import getAllVideosSlice from "../slice/videos/getAllVideoSlice"
 import getVideoByIdSlice from "../slice/videos/getVideoByIdSlice"
+import incrementVideoViewSlice from "../slice/videos/incrementVideoViewSlice"
+import getWatchHistorySlice from "../slice/users/getWatchHistorySlice"
 
 import getChannelStatsSlice from "../slice/dashboard/getChannelStatsSlice"
 import getYourVideosSlice from "../slice/dashboard/getYourVideosSlice"
@@ -87,6 +89,8 @@ const store = configureStore({
     getVideoByIdData: getVideoByIdSlice,
     getAllVideosData: getAllVideosSlice,
     getChannelVideosData: getChannelVideosSlice,
+    incrementVideoViewData: incrementVideoViewSlice,
+    getWatchHistoryData: getWatchHistorySlice,
     // Dashboard slices
 
     getChannelStatsData: getChannelStatsSlice,
