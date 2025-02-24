@@ -47,11 +47,11 @@ const SigninPage = (props) => {
             navigate("/");
           }
         } catch (error) {
-          showMessage("error", error);
+          showMessage("error", error.message);
         }
       }
     } catch (error) {
-      showMessage("error", error);
+      showMessage("error", error.message);
     }
   };
 

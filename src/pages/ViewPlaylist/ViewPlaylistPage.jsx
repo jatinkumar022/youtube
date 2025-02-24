@@ -51,9 +51,10 @@ const ViewPlaylistComponent = ({
   useEffect(() => {
     const getMyVideos = async () => {
       try {
-        await callgetMyVideos();
+        const response = await callgetMyVideos();
+        console.log(response);
       } catch (error) {
-        showMessage("error", error, 2);
+        showMessage("error", error.message, 2);
       }
     };
     getMyVideos();
@@ -67,7 +68,7 @@ const ViewPlaylistComponent = ({
       });
       getPlaylistInfo();
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
     }
   };
 
@@ -143,7 +144,7 @@ const ViewPlaylistComponent = ({
                   <VideoSelectModal
                     isVisible={isModalVisible}
                     closeModal={closeModal}
-                    videos={callgetMyVideosData?.getMyVideosData?.data}
+                    videos={callgetMyVideosData?.getmyVideosData?.data}
                     onSelectVideo={handleSelectVideo}
                   />
                 </div>

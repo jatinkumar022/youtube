@@ -145,7 +145,7 @@ const SubscriptionPage = (props) => {
         setSubscriptionVideos(shuffledVideos);
         setLoadingVideos(false);
       } catch (error) {
-        showMessage("error", error, 2);
+        showMessage("error", error.message, 2);
 
         setLoadingVideos(false);
       }

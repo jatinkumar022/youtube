@@ -41,7 +41,7 @@ const TweetsPage = (props) => {
         setTweets(response?.payload?.data?.tweets);
         setLoading(false);
       } catch (error) {
-        showMessage("error", error, 2);
+        showMessage("error", error.message, 2);
 
         setLoading(false);
       }
@@ -58,7 +58,7 @@ const TweetsPage = (props) => {
       setTweets(response?.payload?.data?.tweets);
       setLoading(false);
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
       setLoading(false);
     }
   };

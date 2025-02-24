@@ -60,7 +60,7 @@ const AppLayout = ({
           const response = await callGetSubscribedChannels();
         }
       } catch (error) {
-        showMessage("error", error, 2);
+        showMessage("error", error.message, 2);
       }
     };
     getSubscriptions();

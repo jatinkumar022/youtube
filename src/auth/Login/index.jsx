@@ -47,7 +47,7 @@ const LoginPage = (props) => {
         showMessage("error", response.error.message);
       }
     } catch (error) {
-      showMessage("error", error);
+      showMessage("error", error.message);
     }
   };
   return (

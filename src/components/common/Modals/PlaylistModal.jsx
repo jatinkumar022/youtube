@@ -22,7 +22,7 @@ const PlaylistModal = ({
         await getPlaylists();
       }
     } catch (error) {
-      showMessage("error", error);
+      showMessage("error", error.message);
     }
     form.resetFields(); // Reset the form fields after submission
     closeModal(); // Close the modal after submission

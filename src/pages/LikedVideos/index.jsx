@@ -17,7 +17,7 @@ const LikedVideos = (props) => {
         const response = await callLikedVideos();
         setLoading(false);
       } catch (error) {
-        showMessage("error", error, 2);
+        showMessage("error", error.message, 2);
 
         setLoading(false);
       }

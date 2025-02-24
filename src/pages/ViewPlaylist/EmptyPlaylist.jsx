@@ -46,7 +46,7 @@ const EmptyPlaylist = (props) => {
       try {
         await callgetMyVideos();
       } catch (error) {
-        showMessage("error", error, 2);
+        showMessage("error", error.message, 2);
       }
     };
     getMyVideos();
@@ -92,7 +92,7 @@ const EmptyPlaylist = (props) => {
             <VideoSelectModal
               isVisible={isModalVisible}
               closeModal={closeModal}
-              videos={callgetMyVideosData?.getMyVideosData?.data}
+              videos={callgetMyVideosData?.getmyVideosData?.data}
               onSelectVideo={handleSelectVideo}
             />
           </div>
