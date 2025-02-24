@@ -7,15 +7,15 @@ import { MdDeleteOutline } from "react-icons/md";
 import EditPlaylistModal from "../../components/common/Modals/EditPlaylist";
 import DeleteModal from "../../components/common/Modals/DeleteModal";
 import { addVideoToPlaylist } from "../../redux/slice/playlist/addVideoToPlaylistSlice";
-import { getYourVideos } from "../../redux/slice/dashboard/getYourVideosSlice";
+import { getmyVideos } from "../../redux/slice/dashboard/getMyVideosSlice";
 import { connect } from "react-redux";
 import useMessage from "../../utils/useMessage";
 
 const EmptyPlaylist = (props) => {
   const {
     PlaylistInfo,
-    callGetYourVideos,
-    callGetYourVideosData,
+    callgetMyVideos,
+    callgetMyVideosData,
     handleDelete,
     handleSelectVideo,
     isDeleteModalVisible,
@@ -42,14 +42,14 @@ const EmptyPlaylist = (props) => {
   };
 
   useEffect(() => {
-    const getYourVideos = async () => {
+    const getMyVideos = async () => {
       try {
-        await callGetYourVideos();
+        await callgetMyVideos();
       } catch (error) {
         showMessage("error", error, 2);
       }
     };
-    getYourVideos();
+    getMyVideos();
   }, []);
 
   return (
@@ -92,7 +92,7 @@ const EmptyPlaylist = (props) => {
             <VideoSelectModal
               isVisible={isModalVisible}
               closeModal={closeModal}
-              videos={callGetYourVideosData?.getYourVideosData?.data}
+              videos={callgetMyVideosData?.getMyVideosData?.data}
               onSelectVideo={handleSelectVideo}
             />
           </div>
@@ -134,14 +134,14 @@ const EmptyPlaylist = (props) => {
 const mapStateToProps = (state) => {
   return {
     callCurrentUserData: state.getCurrentUserData,
-    callGetYourVideosData: state.getYourVideosData,
+    callgetMyVideosData: state.getMyVideosData,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     callAddVideoToPlaylist: (data) => dispatch(addVideoToPlaylist(data)),
-    callGetYourVideos: () => dispatch(getYourVideos()),
+    callgetMyVideos: () => dispatch(getmyVideos()),
   };
 };
 

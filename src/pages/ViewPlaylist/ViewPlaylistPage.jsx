@@ -5,7 +5,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import { BsPencil } from "react-icons/bs";
 import EditPlaylistModal from "../../components/common/Modals/EditPlaylist";
 
-import { getYourVideos } from "../../redux/slice/dashboard/getYourVideosSlice";
+import { getmyVideos } from "../../redux/slice/dashboard/getMyVideosSlice";
 import { connect } from "react-redux";
 import { AiOutlinePlus } from "react-icons/ai";
 import VideoSelectModal from "../../components/common/Modals/VideoSelectModal";
@@ -18,8 +18,8 @@ import useMessage from "../../utils/useMessage";
 
 const ViewPlaylistComponent = ({
   PlaylistInfo,
-  callGetYourVideos,
-  callGetYourVideosData,
+  callgetMyVideos,
+  callgetMyVideosData,
   callRemoveVideoFromPlaylist,
   handleDelete,
   handleSelectVideo,
@@ -49,14 +49,14 @@ const ViewPlaylistComponent = ({
   };
 
   useEffect(() => {
-    const getYourVideos = async () => {
+    const getMyVideos = async () => {
       try {
-        await callGetYourVideos();
+        await callgetMyVideos();
       } catch (error) {
         showMessage("error", error, 2);
       }
     };
-    getYourVideos();
+    getMyVideos();
   }, []);
 
   const handleRemoveVideo = async (videoId) => {
@@ -143,7 +143,7 @@ const ViewPlaylistComponent = ({
                   <VideoSelectModal
                     isVisible={isModalVisible}
                     closeModal={closeModal}
-                    videos={callGetYourVideosData?.getYourVideosData?.data}
+                    videos={callgetMyVideosData?.getMyVideosData?.data}
                     onSelectVideo={handleSelectVideo}
                   />
                 </div>
@@ -283,13 +283,13 @@ const ViewPlaylistComponent = ({
 const mapStateToProps = (state) => {
   return {
     callCurrentUserData: state.getCurrentUserData,
-    callGetYourVideosData: state.getYourVideosData,
+    callgetMyVideosData: state.getMyVideosData,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    callGetYourVideos: () => dispatch(getYourVideos()),
+    callgetMyVideos: () => dispatch(getmyVideos()),
     callRemoveVideoFromPlaylist: (data) =>
       dispatch(removeVideoFromPlaylist(data)),
   };

@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 
 import { format } from "date-fns"; // Added compareDesc for date sorting
 import { getChannelStats } from "../../redux/slice/dashboard/getChannelStatsSlice";
-import { getYourVideos } from "../../redux/slice/dashboard/getYourVideosSlice";
+import { getmyVideos } from "../../redux/slice/dashboard/getMyVideosSlice";
 import { togglePublish } from "../../redux/slice/videos/togglePublishSlice";
 import { deleteVideo } from "../../redux/slice/videos/deleteVideoSlice";
 import { getCurrentUser } from "../../redux/slice/users/getCurrentUserSlice";
@@ -21,9 +21,9 @@ const YourChannel = (props) => {
     callUpdateCoverImage,
     callUpdateAvatar,
     callGetChannelStats,
-    callGetYourVideos,
+    callgetMyVideos,
     callGetChannelStatsData,
-    callGetYourVideosData,
+    callgetMyVideosData,
     callTogglePublishData,
     callDeleteVideo,
     callGetCurrentUser,
@@ -192,16 +192,16 @@ const YourChannel = (props) => {
       }
     };
 
-    const handleGetYourVideos = async () => {
+    const handlegetMyVideos = async () => {
       try {
-        const response = await callGetYourVideos();
+        const response = await callgetMyVideos();
       } catch (error) {
         showMessage("error", error, 2);
 
         setLoading(false);
       }
     };
-    handleGetYourVideos();
+    handlegetMyVideos();
     handleGetChannelStats();
     setLoading(false);
   }, []);
@@ -217,7 +217,7 @@ const YourChannel = (props) => {
         if (data.isPublished === false) {
           showMessage("warning", "Video Privated", 2);
         }
-        await callGetYourVideos();
+        await callgetMyVideos();
       }
     } catch (error) {
       showMessage("error", error, 2);
@@ -230,7 +230,7 @@ const YourChannel = (props) => {
 
       if (response.type === "deleteVideo/fulfilled") {
         showMessage("error", "Video Deleted", 2);
-        await callGetYourVideos();
+        await callgetMyVideos();
       }
     } catch (error) {
       showMessage("error", error, 2);
@@ -263,7 +263,7 @@ const YourChannel = (props) => {
           setIsModalVisible={setIsModalVisible}
           toggleModal={toggleModal}
           groupByDate={groupByDate}
-          videoData={callGetYourVideosData?.getYourVideosData?.data}
+          videoData={callgetMyVideosData?.getMyVideosData?.data}
           handleDeleteVideo={handleDeleteVideo}
           // dashboard
           ChannelStats={callGetChannelStatsData?.getChannelStatsData?.data}
@@ -277,7 +277,7 @@ const mapStateToProps = (state) => {
   return {
     callGetCurrentUserData: state.getCurrentUserData,
     callGetChannelStatsData: state.getChannelStatsData,
-    callGetYourVideosData: state.getYourVideosData,
+    callgetMyVideosData: state.getMyVideosData,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -285,7 +285,7 @@ const mapDispatchToProps = (dispatch) => {
     callUpdateUser: (data) => dispatch(updateUser(data)),
     callUpdateCoverImage: (data) => dispatch(updateCoverImage(data)),
     callUpdateAvatar: (data) => dispatch(updateAvatar(data)),
-    callGetYourVideos: (data) => dispatch(getYourVideos(data)),
+    callgetMyVideos: (data) => dispatch(getMyVideos(data)),
     callGetChannelStats: (data) => dispatch(getChannelStats(data)),
     callTogglePublishData: (data) => dispatch(togglePublish(data)),
     callDeleteVideo: (videoId) => dispatch(deleteVideo(videoId)),

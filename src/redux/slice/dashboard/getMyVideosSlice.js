@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "../../../utils/useApi";
 
-export const getYourVideos = createAsyncThunk("getYourVideos", async () => {
+export const getmyVideos = createAsyncThunk("getmyVideos", async () => {
   try {
     const response = await api.get(
       `/dashboard/videos`,
@@ -25,23 +25,23 @@ export const getYourVideos = createAsyncThunk("getYourVideos", async () => {
 
 const initialState = {
   isLoading: false,
-  getYourVideosData: null,
+  getmyVideosData: null,
   isError: false,
   errorMessage: "",
 };
-const getYourVideosSlice = createSlice({
-  name: "getYourVideos",
+const getmyVideosSlice = createSlice({
+  name: "getmyVideos",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getYourVideos.pending, (state) => {
+    builder.addCase(getmyVideos.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(getYourVideos.fulfilled, (state, action) => {
+    builder.addCase(getmyVideos.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.getYourVideosData = action.payload;
+      state.getmyVideosData = action.payload;
     });
-    builder.addCase(getYourVideos.rejected, (state, action) => {
+    builder.addCase(getmyVideos.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.errorMessage = action.error.message;
@@ -49,4 +49,4 @@ const getYourVideosSlice = createSlice({
   },
 });
 
-export default getYourVideosSlice.reducer;
+export default getmyVideosSlice.reducer;
