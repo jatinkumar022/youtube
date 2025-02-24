@@ -108,7 +108,7 @@ const AppLayout = ({
           onClose={() => setIsModalVisible(false)}
         />
       )}
-      <BottomBar />
+      {!isAuth ? <BottomBar /> : ""}
     </div>
   );
 };
