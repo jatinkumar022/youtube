@@ -12,8 +12,7 @@ import {
 import { connect } from "react-redux";
 import { updateVideo } from "../../redux/slice/videos/updateVideoSlice";
 import { PlusOutlined } from "@ant-design/icons";
-// eslint-disable-next-line import/no-unresolved
-import { getYourVideos } from "../../redux/slice/dashboard/GetYourVideosSlice";
+import { getYourVideos } from "../../redux/slice/dashboard/getYourVideosSlice";
 import useMessage from "../../utils/useMessage";
 const { TextArea } = Input;
 

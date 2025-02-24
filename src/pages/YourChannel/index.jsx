@@ -8,8 +8,7 @@ import { useNavigate } from "react-router";
 
 import { format } from "date-fns"; // Added compareDesc for date sorting
 import { getChannelStats } from "../../redux/slice/dashboard/getChannelStatsSlice";
-// eslint-disable-next-line import/no-unresolved
-import { getYourVideos } from "../../redux/slice/dashboard/GetYourVideosSlice";
+import { getYourVideos } from "../../redux/slice/dashboard/getYourVideosSlice";
 import { togglePublish } from "../../redux/slice/videos/togglePublishSlice";
 import { deleteVideo } from "../../redux/slice/videos/deleteVideoSlice";
 import { getCurrentUser } from "../../redux/slice/users/getCurrentUserSlice";

@@ -12,7 +12,6 @@ import { uploadTweet } from "../../redux/slice/tweets/uploadTweetSlice";
 import { getTweets } from "../../redux/slice/tweets/getTweetsSlice";
 import { deleteTweet } from "../../redux/slice/tweets/deleteTweetSlice";
 import { updateTweet } from "../../redux/slice/tweets/updateTweetSlice";
-// eslint-disable-next-line import/no-unresolved
 import { getYourVideos } from "../../redux/slice/dashboard/GetYourVideosSlice";
 import { isLikedTweet } from "../../redux/slice/likes/isLikedTweetSlice";
 import { likeTweet } from "../../redux/slice/likes/likeTweetSlice";
