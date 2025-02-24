@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "src/index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    { "src": "/login", "dest": "/index.html" },
+    { "src": "/signin", "dest": "/index.html" },
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/video/:videoId", "dest": "/index.html" },
+    { "src": "/tweet", "dest": "/index.html" },
+    { "src": "/your-channel", "dest": "/index.html" },
+    { "src": "/subscription", "dest": "/index.html" },
+    { "src": "/library", "dest": "/index.html" },
+    { "src": "/history", "dest": "/index.html" },
+    { "src": "/playlists", "dest": "/index.html" },
+    { "src": "/playlist/:playlistId", "dest": "/index.html" },
+    { "src": "/watchlater", "dest": "/index.html" },
+    { "src": "/liked-videos", "dest": "/index.html" },
+    { "src": "/channel/:username", "dest": "/index.html" },
+    { "src": "/search", "dest": "/index.html" },
+    { "src": "/settings", "dest": "/index.html" },
+    { "src": "/your-content", "dest": "/index.html" }
+  ]
+}
