@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Controller } from "react-hook-form";
 import { Input } from "antd";
-import { lines, sparc, yt } from "../../assets";
+import { lines, reelify, sparc, yt } from "../../assets";
 import ReactLoading from "react-loading";
 import { Link } from "react-router";
 import { LuCircleCheck, LuUsers } from "react-icons/lu";
@@ -84,7 +84,7 @@ const Login = (props) => {
         <div className="h-full w-full justify-center items-center flex flex-col px-5 bg-[#88838321] rounded-3xl ">
           <div className="sm:w-420 md:w-[24rem] flex-center flex-col ">
             <div className="flex items-center gap-3 justify-center">
-              <img src={yt} alt="logo" className="w-12" />
+              <img src={reelify} alt="logo" className="w-12" />
               <h2 className="text-2xl ">Welcome to REELIFY</h2>
             </div>
 

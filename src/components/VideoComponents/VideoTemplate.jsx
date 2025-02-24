@@ -76,7 +76,7 @@ const VideoTemplate = (props) => {
       getVideoDetails();
       setLoading(false);
     } catch (error) {
-      showMessage("error", error);
+      showMessage("error", error.message);
       setLoading(false);
     }
   }, [location?.pathname]);
@@ -88,7 +88,7 @@ const VideoTemplate = (props) => {
       };
       getChannelInfo();
     } catch (error) {
-      showMessage("error", error);
+      showMessage("error", error.message);
     }
   }, [Video?.owner]);
 
@@ -97,7 +97,7 @@ const VideoTemplate = (props) => {
       try {
         const response = await callIsLikedVideo(videoId);
       } catch (error) {
-        showMessage("error", error);
+        showMessage("error", error.message);
       }
     };
     handleGetLikesStatus();

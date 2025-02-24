@@ -8,6 +8,7 @@ import add from "./Add.svg"
 import d_add from "./Add_dark.svg"
 import defaultPlaylist from "./thumbnails/defaultPlaylist.jpg"
 import coverImage from "./settings/coverImage.png"
+import reelify from "./icon2.png"
 export {
   darkLogo,
   logo,
@@ -18,5 +19,6 @@ export {
   lines,
   sparc,
   defaultPlaylist,
-  coverImage
+  coverImage, reelify
+
 }

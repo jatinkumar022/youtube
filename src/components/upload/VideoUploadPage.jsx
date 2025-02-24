@@ -61,7 +61,7 @@ const VideoUploadPage = (props) => {
         };
         handleUploadVideo();
       } catch (error) {
-        showMessage("error", error, 2);
+        showMessage("error", error.message, 2);
         setIsLoading(false);
       }
     });

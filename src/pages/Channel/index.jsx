@@ -40,7 +40,7 @@ const ChannelPage = (props) => {
       getChannelInfo();
       setLoading(false);
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
       setLoading(false);
     }
   }, [username]);
@@ -70,7 +70,7 @@ const ChannelPage = (props) => {
         setMostViewedVideos(sortedMostViewedVideos);
         setLoading(false);
       } catch (error) {
-        showMessage("error", error, 2);
+        showMessage("error", error.message, 2);
 
         setLoading(false);
       }

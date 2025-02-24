@@ -12,7 +12,7 @@ import { uploadTweet } from "../../redux/slice/tweets/uploadTweetSlice";
 import { getTweets } from "../../redux/slice/tweets/getTweetsSlice";
 import { deleteTweet } from "../../redux/slice/tweets/deleteTweetSlice";
 import { updateTweet } from "../../redux/slice/tweets/updateTweetSlice";
-import { getYourVideos } from "../../redux/slice/dashboard/GetYourVideosSlice";
+import { getmyVideos } from "../../redux/slice/dashboard/getMyVideosSlice";
 import { isLikedTweet } from "../../redux/slice/likes/isLikedTweetSlice";
 import { likeTweet } from "../../redux/slice/likes/likeTweetSlice";
 import TweetpageLoader from "../../components/Loaders/TweetPageLoader";
@@ -27,9 +27,9 @@ const YourContent = (props) => {
     callGetTweets,
     callDeleteTweet,
     callUpdateTweet,
-    callGetYourVideosData,
+    callgetMyVideosData,
     callGetTweetsData,
-    callGetYourVideos,
+    callgetMyVideos,
     callLikeTweet,
     callIsLikedTweet,
   } = props;
@@ -95,7 +95,7 @@ const YourContent = (props) => {
 
         // const response = await
       } catch (error) {
-        showMessage("error", error, 2);
+        showMessage("error", error.message, 2);
 
         setIsTweetLoading(false);
       }
@@ -120,7 +120,7 @@ const YourContent = (props) => {
       };
       handleUploadTweet();
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
     }
   };
 
@@ -137,23 +137,23 @@ const YourContent = (props) => {
       }
       // const response = await
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
     }
   };
   // Videos
   useEffect(() => {
-    const handleGetYourVideos = async () => {
+    const handlegetMyVideos = async () => {
       setIsVideoLoading(true);
       try {
-        const response = await callGetYourVideos();
+        const response = await callgetMyVideos();
         setIsVideoLoading(false);
       } catch (error) {
-        showMessage("error", error, 2);
+        showMessage("error", error.message, 2);
 
         setIsVideoLoading(false);
       }
     };
-    handleGetYourVideos();
+    handlegetMyVideos();
   }, []);
 
   return (
@@ -186,7 +186,7 @@ const YourContent = (props) => {
           Array.from({ length: 10 }).map((_, index) => <VideoListLoader />)
         ) : (
           <VideoComponent
-            Video={callGetYourVideosData?.getYourVideosData?.data}
+            Video={callgetMyVideosData?.getmyVideosData?.data}
             currentUserData={callCurrentUserData?.getCurrentUserData?.user}
           />
         )
@@ -222,7 +222,7 @@ const mapStateToProps = (state) => {
   return {
     callCurrentUserData: state.getCurrentUserData,
     callGetTweetsData: state.getTweetsData,
-    callGetYourVideosData: state.getYourVideosData,
+    callgetMyVideosData: state.getMyVideosData,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -232,7 +232,7 @@ const mapDispatchToProps = (dispatch) => {
     callDeleteTweet: (tweet) => dispatch(deleteTweet(tweet)),
     callUploadTweet: (data) => dispatch(uploadTweet(data)),
 
-    callGetYourVideos: (data) => dispatch(getYourVideos(data)),
+    callgetMyVideos: (data) => dispatch(getmyVideos(data)),
     callIsLikedTweet: (tweetId) => dispatch(isLikedTweet(tweetId)),
     callLikeTweet: (tweetId) => dispatch(likeTweet(tweetId)),
   };

@@ -46,7 +46,7 @@ const VideoComponent = (props) => {
       };
       handleGetComments();
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
     }
   }, []);
 
@@ -58,7 +58,7 @@ const VideoComponent = (props) => {
         await callGetComments(videoId);
         form.resetFields();
       } catch (error) {
-        showMessage("error", error, 2);
+        showMessage("error", error.message, 2);
       }
     }
   };
@@ -71,7 +71,7 @@ const VideoComponent = (props) => {
 
         setIsEditing(false);
       } catch (error) {
-        showMessage("error", error, 2);
+        showMessage("error", error.message, 2);
       }
     }
   };
@@ -81,7 +81,7 @@ const VideoComponent = (props) => {
       const response = await callDeleteComment(commentId);
       await callGetComments(videoId);
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
     }
   };
 

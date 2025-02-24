@@ -28,7 +28,7 @@ import incrementVideoViewSlice from "../slice/videos/incrementVideoViewSlice"
 import getWatchHistorySlice from "../slice/users/getWatchHistorySlice"
 
 import getChannelStatsSlice from "../slice/dashboard/getChannelStatsSlice"
-import getYourVideosSlice from "../slice/dashboard/getYourVideosSlice"
+import getMyVideosSlice from "../slice/dashboard/getMyVideosSlice"
 
 import addCommentSlice from "../slice/comments/addCommentSlice"
 import updateCommentSlice from "../slice/comments/updateCommentSlice"
@@ -94,7 +94,7 @@ const store = configureStore({
     // Dashboard slices
 
     getChannelStatsData: getChannelStatsSlice,
-    getYourVideosData: getYourVideosSlice,
+    getMyVideosData: getMyVideosSlice,
 
     // Comments slice 
 

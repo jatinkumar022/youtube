@@ -38,7 +38,7 @@ const UserPage = (props) => {
       try {
         const response = await callGetWatchHistory();
       } catch (error) {
-        showMessage("error", error);
+        showMessage("error", error.message);
       }
     };
     getWatchHistory();
@@ -62,7 +62,7 @@ const UserPage = (props) => {
         setLoading(false);
       }
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
 
       setLoading(false);
     }

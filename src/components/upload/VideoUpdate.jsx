@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  Modal,
-  Upload,
-  Input,
-  Button,
-  Form,
-  message,
-  Switch,
-  Radio,
-} from "antd";
+import { Modal, Upload, Input, Button, Form, message, Radio } from "antd";
 import { connect } from "react-redux";
 import { updateVideo } from "../../redux/slice/videos/updateVideoSlice";
 import { PlusOutlined } from "@ant-design/icons";
-import { getYourVideos } from "../../redux/slice/dashboard/getYourVideosSlice";
+import { getmyVideos } from "../../redux/slice/dashboard/getMyVideosSlice";
 import useMessage from "../../utils/useMessage";
 const { TextArea } = Input;
 
@@ -22,7 +13,7 @@ const VideoUpdate = (props) => {
     setIsVisible,
     onClose,
     callUpdateVideo,
-    callGetYourVideos,
+    callgetMyVideos,
     Data, // Old video details coming from props
   } = props;
   const { showMessage } = useMessage();
@@ -92,11 +83,11 @@ const VideoUpdate = (props) => {
       if (response.type == "updateVideo/fulfilled") {
         showMessage("success", "Video Updated Successfully", 2);
       }
-      await callGetYourVideos();
+      await callgetMyVideos();
       setIsLoading(false);
       setIsVisible(false); // Close the modal
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
       setIsLoading(false);
     }
   };
@@ -187,7 +178,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     callUpdateVideo: (videoDetails) => dispatch(updateVideo(videoDetails)),
-    callGetYourVideos: () => dispatch(getYourVideos()),
+    callgetMyVideos: () => dispatch(getMyVideos()),
   };
 };
 
