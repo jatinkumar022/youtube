@@ -12,6 +12,7 @@ import { likeTweet } from "../../redux/slice/likes/likeTweetSlice";
 import { updateTweet } from "../../redux/slice/tweets/updateTweetSlice";
 import { deleteTweet } from "../../redux/slice/tweets/deleteTweetSlice";
 import TweetpageLoader from "../../components/Loaders/TweetPageLoader";
+import useMessage from "../../utils/useMessage";
 
 const TweetsPage = (props) => {
   const {
@@ -27,6 +28,7 @@ const TweetsPage = (props) => {
     callIsLikedTweet,
     callLikeTweet,
   } = props;
+  const { showMessage } = useMessage();
   const [tweets, setTweets] = useState([]);
   const [loading, setLoading] = useState(true); // Add loading state
 
@@ -39,7 +41,8 @@ const TweetsPage = (props) => {
         setTweets(response?.payload?.data?.tweets);
         setLoading(false);
       } catch (error) {
-        console.log(error);
+        showMessage("error", error, 2);
+
         setLoading(false);
       }
     };
@@ -55,7 +58,7 @@ const TweetsPage = (props) => {
       setTweets(response?.payload?.data?.tweets);
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      showMessage("error", error, 2);
       setLoading(false);
     }
   };

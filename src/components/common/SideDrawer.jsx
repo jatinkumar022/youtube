@@ -50,8 +50,8 @@ const SideDrawer = ({ open, setOpen, Subscriptions }) => {
                 />
               </div>
               <div className="cursor-pointer ml-3 sm:ml-0">
-                <img src={darkLogo} className=" hidden dark:block h-5 " />
-                <img src={logo} className="dark:hidden h-5" />
+                <img src={darkLogo} className=" hidden dark:block h-8 " />
+                <img src={logo} className="dark:hidden h-8" />
               </div>
             </div>
           </div>

@@ -9,6 +9,8 @@ const HomeComponent = ({ Videos, playLists, loading }) => {
   let HomeData;
   if (Videos && playLists) {
     HomeData = mergeVideoAndPlaylists(Videos, playLists);
+  } else {
+    HomeData = Videos;
   }
 
   return (

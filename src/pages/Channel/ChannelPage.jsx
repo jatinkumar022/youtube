@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-import avatar from "../../assets/avatar/avatar.jpg";
 import { Link } from "react-router";
-import { GoPlus } from "react-icons/go";
 import SwiperComponent from "../../components/common/Swiper";
 import { LuShare } from "react-icons/lu";
 import TabComponent from "../../components/common/Tab";
 import Container from "../../components/common/Container";
 import VideoCard from "../../components/common/VideoCard";
 import PlaylistCard from "../../components/common/PlaylistCard";
-import { coverImage } from "../../assets";
 const ChannelComponent = (props) => {
   const {
     items,
@@ -146,7 +143,6 @@ const ChannelComponent = (props) => {
       ))}
     </Container>
   );
-
   const about = (
     <>
       <div className="p-3">
@@ -205,17 +201,17 @@ const ChannelComponent = (props) => {
             <div className="flex mb-3 -space-x-3 rtl:space-x-reverse">
               <img
                 className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-                src={avatar}
+                src={channelData?.avatar}
                 alt=""
               />
               <img
                 className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-                src={avatar}
+                src={channelData?.avatar}
                 alt=""
               />
               <img
                 className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-                src={avatar}
+                src={channelData?.avatar}
                 alt=""
               />
               <div className="flex items-center justify-center w-8 h-8 text-xs font-medium text-white bg-gray-400 border-2 border-white rounded-full hover:bg-gray-500 dark:border-gray-800 cursor-default">
@@ -290,11 +286,17 @@ const ChannelComponent = (props) => {
             </div>
             <div className="flex gap-1 w-full min-[750px]:hidden  ">
               {channelData?.isSubscribed ? (
-                <button className="p-2  w-full rounded-full dark:bg-[#272727] bg-[#f2f2f2] hover:dark:bg-[#2f2f2f] text-sm font-medium flex items-center justify-center gap-2">
+                <button
+                  className="p-2  w-full rounded-full dark:bg-[#272727] bg-[#f2f2f2] hover:dark:bg-[#2f2f2f] text-sm font-medium flex items-center justify-center gap-2"
+                  onClick={() => handleSubscribe(channelData?._id)}
+                >
                   Subscribed
                 </button>
               ) : (
-                <button className="p-2 w-full rounded-full dark:bg-[#ffffff] bg-[#000000] hover:dark:bg-[#e2e2e2] hover:bg-[#181818] text-white dark:text-black text-sm font-medium flex items-center justify-center gap-2">
+                <button
+                  className="p-2 w-full rounded-full dark:bg-[#ffffff] bg-[#000000] hover:dark:bg-[#e2e2e2] hover:bg-[#181818] text-white dark:text-black text-sm font-medium flex items-center justify-center gap-2"
+                  onClick={() => handleSubscribe(channelData?._id)}
+                >
                   Subscribe
                 </button>
               )}

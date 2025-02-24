@@ -14,6 +14,7 @@ import { getChannelVideos } from "../../redux/slice/videos/getChannelVideosSlice
 import ChannelsLoader from "../../components/Loaders/ChannelsLoader";
 import VideosLoader from "../../components/Loaders/VideosLoader";
 import Container from "../../components/common/Container";
+import useMessage from "../../utils/useMessage";
 
 const SubscriptionPage = (props) => {
   const {
@@ -23,6 +24,7 @@ const SubscriptionPage = (props) => {
     callToggleSubscribe,
     callGetChannelVideos,
   } = props;
+  const { showMessage } = useMessage();
   const [selected, setSelected] = useState("channels");
   const [searchParams] = useSearchParams();
   const [subscriptions, setSubscriptions] = useState([]);
@@ -143,7 +145,8 @@ const SubscriptionPage = (props) => {
         setSubscriptionVideos(shuffledVideos);
         setLoadingVideos(false);
       } catch (error) {
-        console.error("Error fetching subscription videos:", error);
+        showMessage("error", error, 2);
+
         setLoadingVideos(false);
       }
     };

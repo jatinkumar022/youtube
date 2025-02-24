@@ -60,7 +60,7 @@ const Signin = (props) => {
               </div>
 
               <p className="text-xs flex gap-1 items-center roboto-regular text-[#686767] mt-1">
-                YouTube supports resolutions from 144p to 8K, but 1080p is the
+                REELIFY supports resolutions from 144p to 8K, but 1080p is the
                 most common standard for high-quality uploads.
               </p>
             </div>{" "}
@@ -73,7 +73,7 @@ const Signin = (props) => {
 
               <p className="text-xs flex gap-1 items-center roboto-regular text-[#686767] mt-1">
                 Use MP4 format with H.264 codec for optimal playback and
-                compression quality on YouTube.
+                compression quality on REELIFY.
               </p>
             </div>
           </div>
@@ -86,7 +86,7 @@ const Signin = (props) => {
           <div className="sm:w-420 md:w-[24rem] flex-center flex-col ">
             <div className="flex items-center gap-3 justify-center">
               <img src={yt} alt="logo" className="w-12" />
-              <h2 className="text-2xl ">Welcome to Youtube</h2>
+              <h2 className="text-2xl ">Welcome to REELIFY</h2>
             </div>
 
             <h2 className="h3-bold md:h2-bold pt-5 sm:pt-6 roboto-medium">

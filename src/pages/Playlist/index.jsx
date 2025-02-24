@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { getUserPlaylists } from "../../redux/slice/playlist/getUserPlaylists";
 import VideosLoader from "../../components/Loaders/VideosLoader";
 import Container from "../../components/common/Container";
+import useMessage from "../../utils/useMessage";
 
 const PlaylistPage = (props) => {
   const {
@@ -12,6 +13,7 @@ const PlaylistPage = (props) => {
     callGetUserPlaylists,
     callGetUserPlaylistsData,
   } = props;
+  const { showMessage } = useMessage();
   const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
@@ -28,7 +30,8 @@ const PlaylistPage = (props) => {
         setLoading(false);
       }
     } catch (error) {
-      console.log(error);
+      showMessage("error", error, 2);
+
       setLoading(false);
     }
   }, []);

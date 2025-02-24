@@ -4,6 +4,7 @@ import { Modal, Upload, Input, Button, Form, message } from "antd";
 import { MdUpload } from "react-icons/md";
 import { connect } from "react-redux";
 import { uploadVideo } from "../../redux/slice/videos/uploadVideoSlice";
+import useMessage from "../../utils/useMessage";
 
 const { Dragger } = Upload;
 const { TextArea } = Input;
@@ -19,6 +20,7 @@ const VideoUploadPage = (props) => {
     width: window.innerWidth,
     height: window.innerHeight,
   });
+  const { showMessage } = useMessage();
 
   const handleResize = () => {
     setScreenSize({
@@ -50,12 +52,16 @@ const VideoUploadPage = (props) => {
         const handleUploadVideo = async () => {
           setIsLoading(true);
           const response = await callUploadVideo(formData);
+
+          if (response.type == "uploadVideo/fulfilled") {
+            showMessage("success", "Video Uploaded Successfully", 2);
+          }
           setIsLoading(false);
           setIsVisible(false);
         };
         handleUploadVideo();
       } catch (error) {
-        console.log(error);
+        showMessage("error", error, 2);
         setIsLoading(false);
       }
     });

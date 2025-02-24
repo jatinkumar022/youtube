@@ -22,7 +22,7 @@ const VideoSelectModal = ({ isVisible, closeModal, videos, onSelectVideo }) => {
 
   return (
     <Modal
-      title="Select YouTube Video"
+      title="Select REELIFY Video"
       visible={isVisible}
       onCancel={closeModal}
       onOk={handleOk}

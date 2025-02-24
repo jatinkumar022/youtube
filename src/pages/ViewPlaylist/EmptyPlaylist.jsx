@@ -9,6 +9,7 @@ import DeleteModal from "../../components/common/Modals/DeleteModal";
 import { addVideoToPlaylist } from "../../redux/slice/playlist/addVideoToPlaylistSlice";
 import { getYourVideos } from "../../redux/slice/dashboard/getYourVideosSlice";
 import { connect } from "react-redux";
+import useMessage from "../../utils/useMessage";
 
 const EmptyPlaylist = (props) => {
   const {
@@ -24,7 +25,7 @@ const EmptyPlaylist = (props) => {
   } = props;
   const [isEditModalOpen, setIsEditModalOpen] = useState(false); // Track modal open state
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const { showMessage } = useMessage();
   // Select Video
   const showModal = () => {
     setIsModalVisible(true);
@@ -45,7 +46,7 @@ const EmptyPlaylist = (props) => {
       try {
         await callGetYourVideos();
       } catch (error) {
-        console.log(error);
+        showMessage("error", error, 2);
       }
     };
     getYourVideos();

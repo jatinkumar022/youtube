@@ -1,17 +1,23 @@
 import React, { useState } from "react";
-import avatar from "../../assets/avatar/avatar.jpg";
-import { MdLogout, MdOutlineSwitchAccount } from "react-icons/md";
+import { MdLogout } from "react-icons/md";
 import { Link, useNavigate } from "react-router";
 import SwiperComponent from "../../components/common/Swiper";
-import { IoMdPlay } from "react-icons/io";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { Popconfirm } from "antd";
 import LikedVideosSwiper from "../../components/common/LikedVideosSwiper";
 import { GoPlus } from "react-icons/go";
 import PlaylistModal from "../../components/common/Modals/PlaylistModal";
 import PlaylistSwiperComponent from "../../components/common/PlaylistSwiper";
+import HistorySwiperComponent from "../../components/common/HistorySwiper";
 const UserComponent = (props) => {
-  const { handleLogout, playlist, user, LikedVideos, getPlaylists } = props;
+  const {
+    handleLogout,
+    playlist,
+    user,
+    LikedVideos,
+    getPlaylists,
+    watchHistory,
+  } = props;
   const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false); // Track modal open state
@@ -19,7 +25,7 @@ const UserComponent = (props) => {
   const closeModal = () => {
     setIsModalOpen(false); // Close modal
   };
-
+  console.log(watchHistory);
   return (
     <>
       <div className="p-4 min-[500px]:p-10  min-[600px]:px-32 min-[800px]:px-18 ">
@@ -125,18 +131,12 @@ const UserComponent = (props) => {
       <div className="p-4 min-[500px]:p-10  min-[600px]:px-32 min-[800px]:px-18  ">
         <div className=" lg:w-full flex flex-col justify-start min-[300px]:items-center lg:items-start">
           <div className="w-full ">
-            {false ? (
+            {watchHistory?.length > 0 ? (
               <>
                 <div className="flex justify-between w-full">
                   <h1 className="text-2xl font-semibold">History</h1>
 
                   <div className="flex items-center gap-3">
-                    <button
-                      className="dark:hover:bg-[#272727] text-[#aaa] rounded-full w-10 h-10 flex items-center justify-center"
-                      onClick={() => navigate("/")}
-                    >
-                      <GoPlus size={35} className="" />
-                    </button>
                     <Link
                       to={"/history"}
                       className="p-1 text-base h-10 px-5 border border-[#272727] hover:bg-[#272727] rounded-full flex items-center justify-center hover:text-white"
@@ -146,7 +146,7 @@ const UserComponent = (props) => {
                   </div>
                 </div>
                 {/* Card start */}
-
+                <HistorySwiperComponent History={watchHistory} />
                 {/* <SwiperComponent items={items} /> */}
               </>
             ) : (

@@ -5,9 +5,7 @@ import { updateUser } from "../../redux/slice/users/updateUserSlice";
 import { updateCoverImage } from "../../redux/slice/users/updateCoverImage";
 import { updateAvatar } from "../../redux/slice/users/updateAvatarSlice";
 import { useNavigate } from "react-router";
-import Img from "../../assets/thumbnails/3.jpg";
-import channel from "../../assets/thumbnails/channel.jpg";
-import sample from "../../assets/video/sample.mp4";
+
 import { format } from "date-fns"; // Added compareDesc for date sorting
 import { getChannelStats } from "../../redux/slice/dashboard/getChannelStatsSlice";
 import { getYourVideos } from "../../redux/slice/dashboard/GetYourVideosSlice";
@@ -15,6 +13,7 @@ import { togglePublish } from "../../redux/slice/videos/togglePublishSlice";
 import { deleteVideo } from "../../redux/slice/videos/deleteVideoSlice";
 import { getCurrentUser } from "../../redux/slice/users/getCurrentUserSlice";
 import YourChannelLoader from "../../components/Loaders/YourChannelLoader";
+import useMessage from "../../utils/useMessage";
 const YourChannel = (props) => {
   const {
     callGetCurrentUserData,
@@ -32,7 +31,7 @@ const YourChannel = (props) => {
   const [editing, setEditing] = useState(false);
   const [cropping, setCropping] = useState(null);
   const [cropData, setCropData] = useState(null);
-
+  const { showMessage } = useMessage();
   const cropperRef = useRef(null);
   const avatarInputRef = useRef(null);
   const coverInputRef = useRef(null);
@@ -88,7 +87,7 @@ const YourChannel = (props) => {
         await callGetCurrentUser();
         toggleEdit();
       } catch (error) {
-        console.error(error);
+        showMessage("error", error, 2);
       }
     } else {
       toggleEdit();
@@ -120,9 +119,12 @@ const YourChannel = (props) => {
       const formData = new FormData();
       formData.append("coverImage", file);
       const response = await callUpdateCoverImage(formData);
+      if (response.type === "updateCoverImage/fulfilled") {
+        showMessage("success", "Cover Image Uploaded");
+      }
       await callGetCurrentUser();
     } catch (error) {
-      console.error("Error uploading cover image:", error);
+      showMessage("error", error, 2);
     }
   };
 
@@ -138,9 +140,12 @@ const YourChannel = (props) => {
       const formData = new FormData();
       formData.append("avatar", file);
       const response = await callUpdateAvatar(formData);
+      if (response.type === "updateAvatar/fulfilled") {
+        showMessage("success", "Avatar Uploaded");
+      }
       await callGetCurrentUser();
     } catch (error) {
-      console.error("Error uploading avatar:", error);
+      showMessage("error", error, 2);
     }
   };
 
@@ -181,7 +186,8 @@ const YourChannel = (props) => {
       try {
         const response = await callGetChannelStats();
       } catch (error) {
-        console.log(error);
+        showMessage("error", error, 2);
+
         setLoading(false);
       }
     };
@@ -190,7 +196,8 @@ const YourChannel = (props) => {
       try {
         const response = await callGetYourVideos();
       } catch (error) {
-        console.log(error);
+        showMessage("error", error, 2);
+
         setLoading(false);
       }
     };
@@ -202,18 +209,31 @@ const YourChannel = (props) => {
   const handlePublishVideo = async (data) => {
     try {
       const response = await callTogglePublishData(data);
-      await callGetYourVideos();
+
+      if (response.type == "togglePublish/fulfilled") {
+        if (data.isPublished === true) {
+          showMessage("success", "Video Published Successfully", 2);
+        }
+        if (data.isPublished === false) {
+          showMessage("warning", "Video Privated", 2);
+        }
+        await callGetYourVideos();
+      }
     } catch (error) {
-      console.log(error);
+      showMessage("error", error, 2);
     }
   };
 
   const handleDeleteVideo = async (videoId) => {
     try {
       const response = await callDeleteVideo(videoId);
-      await callGetYourVideos();
+
+      if (response.type === "deleteVideo/fulfilled") {
+        showMessage("error", "Video Deleted", 2);
+        await callGetYourVideos();
+      }
     } catch (error) {
-      console.log(error);
+      showMessage("error", error, 2);
     }
   };
 

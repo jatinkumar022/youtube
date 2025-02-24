@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import DarkModeSwitch from "../Ui/ThemeSwitch";
-import avatar from "../../assets/avatar/avatar.jpg";
 import { FaGoogle } from "react-icons/fa";
 import { MdOutlineSwitchAccount } from "react-icons/md";
 import { IoIosLogOut } from "react-icons/io";
@@ -135,7 +134,7 @@ const ProfileMenu = (props) => {
               className="px-4 flex gap-5 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#313131] cursor-pointer"
             >
               <SiYoutubestudio size={20} />
-              <p className="font-normal text-[17px]">Youtube Studio</p>
+              <p className="font-normal text-[17px]">REELIFY Studio</p>
             </Link>
             <li className="px-4 flex gap-5 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#313131] cursor-pointer">
               <IoMoonOutline size={20} />

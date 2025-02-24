@@ -13,6 +13,7 @@ import { IoMdMore } from "react-icons/io";
 import DeleteModal from "../../components/common/Modals/DeleteModal";
 import { Popconfirm, Popover } from "antd";
 import { removeVideoFromPlaylist } from "../../redux/slice/playlist/removeVideoFromPlaylistSlice";
+import useMessage from "../../utils/useMessage";
 
 const ViewPlaylistComponent = ({
   PlaylistInfo,
@@ -30,7 +31,7 @@ const ViewPlaylistComponent = ({
   const navigate = useNavigate();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false); // Track modal open state
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const { showMessage } = useMessage();
   // Select Video
   const showModal = () => {
     setIsModalVisible(true);
@@ -51,7 +52,7 @@ const ViewPlaylistComponent = ({
       try {
         await callGetYourVideos();
       } catch (error) {
-        console.log(error);
+        showMessage("error", error, 2);
       }
     };
     getYourVideos();
@@ -65,7 +66,7 @@ const ViewPlaylistComponent = ({
       });
       getPlaylistInfo();
     } catch (error) {
-      console.log(error);
+      showMessage("error", error, 2);
     }
   };
 

@@ -6,7 +6,6 @@ export const getChannelPlaylists = createAsyncThunk("getChannelPlaylists", async
 
     const response = await api.get(
       `/playlist/channel/playlists`,
-
       {
         "Content-Type": "application/json",
       }

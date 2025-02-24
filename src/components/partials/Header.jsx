@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DarkModeSwitch from "../Ui/ThemeSwitch";
-import { avatar1, darkLogo, logo } from "../../assets";
-import thumbnail from "../../assets/thumbnails/1.jpg";
+import { darkLogo, logo } from "../../assets";
 import { IoIosSearch, IoMdNotificationsOutline } from "react-icons/io";
 import { LiaChromecast } from "react-icons/lia";
 import { FiMenu } from "react-icons/fi";
@@ -89,7 +88,7 @@ const Header = ({ isVideo, onUploadClick, Subscriptions }) => {
           <div className="flex justify-between gap-20 items-center">
             <div className="flex gap-3">
               <div>
-                <img src={avatar1} className="w-12 rounded-full" />
+                <img className="w-12 rounded-full" />
               </div>
               <div>
                 <p className="text-base font-normal"> For you: Channel Name</p>
@@ -99,7 +98,7 @@ const Header = ({ isVideo, onUploadClick, Subscriptions }) => {
               </div>
             </div>
             <div>
-              <img src={thumbnail} className="w-24 rounded-md " />
+              <img className="w-24 rounded-md " />
             </div>
           </div>
         </div>
@@ -108,7 +107,7 @@ const Header = ({ isVideo, onUploadClick, Subscriptions }) => {
           <div className="flex justify-between gap-20 items-center">
             <div className="flex gap-3">
               <div>
-                <img src={avatar1} className="w-12 rounded-full" />
+                <img className="w-12 rounded-full" />
               </div>
               <div>
                 <p className="text-base font-normal"> For you: Channel Name</p>
@@ -118,7 +117,7 @@ const Header = ({ isVideo, onUploadClick, Subscriptions }) => {
               </div>
             </div>
             <div>
-              <img src={thumbnail} className="w-24 rounded-md " />
+              <img className="w-24 rounded-md " />
             </div>
           </div>
         </div>
@@ -172,8 +171,8 @@ const Header = ({ isVideo, onUploadClick, Subscriptions }) => {
             />
           </div>
           <Link to={"/"} className="cursor-pointer ml-3 sm:ml-0">
-            <img src={darkLogo} className=" hidden dark:block h-5 " />
-            <img src={logo} className="dark:hidden h-5" />
+            <img src={darkLogo} className=" hidden dark:block h-8 " />
+            <img src={logo} className="dark:hidden h-8" />
           </Link>
         </div>
 

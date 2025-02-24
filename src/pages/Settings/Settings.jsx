@@ -1,5 +1,5 @@
 import React from "react";
-import { appear, avatar1 } from "../../assets";
+import { appear } from "../../assets";
 import { Button, Form, Input, Modal } from "antd";
 import { Link } from "react-router";
 const SettingsPage = (props) => {
@@ -14,7 +14,7 @@ const SettingsPage = (props) => {
         <div className="flex items-center justify-between gap-6 border-b dark:border-[#4f4f4f] pb-4">
           <div className="flex flex-col gap-4">
             <h1 className="roboto-normal text-xl  sm:text-2xl md:text-3xl roboto-regular">
-              Choose how you appear and what you see on YouTube
+              Choose how you appear and what you see on REELIFY
             </h1>
             <p className="text-sm font-medium dark:text-[#aaa] text-[#606060] roboto-regular">
               Signed in as jatin.r.dvijinfotech@gmail.com
@@ -26,9 +26,9 @@ const SettingsPage = (props) => {
         </div>
 
         <div className="py-9 border-b dark:border-[#4f4f4f] ">
-          <h1 className="text-lg roboto-medium pb-1">Your YouTube channel</h1>
+          <h1 className="text-lg roboto-medium pb-1">Your REELIFY channel</h1>
           <p className="roboto-regular text-xs dark:text-[#aaa] text-[#606060] ">
-            This is your public presence on YouTube. You need a channel to
+            This is your public presence on REELIFY. You need a channel to
             upload your own videos, comment on videos, or create playlists.
           </p>
           <div className="pt-4 sm:flex sm:gap-20  ">
