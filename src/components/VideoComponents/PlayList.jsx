@@ -34,7 +34,7 @@ const PlayList = ({
       try {
         const response = await callGetAllVideos();
       } catch (error) {
-        showMessage("error", error);
+        showMessage("error", error.message);
       }
     };
     handleGetAllVideos();
@@ -45,7 +45,7 @@ const PlayList = ({
       try {
         const response = await callGetChannelPlaylists();
       } catch (error) {
-        showMessage("error", error);
+        showMessage("error", error.message);
       }
     };
     handleGetChannelPlaylists();

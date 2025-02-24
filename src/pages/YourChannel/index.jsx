@@ -87,7 +87,7 @@ const YourChannel = (props) => {
         await callGetCurrentUser();
         toggleEdit();
       } catch (error) {
-        showMessage("error", error, 2);
+        showMessage("error", error.message, 2);
       }
     } else {
       toggleEdit();
@@ -124,7 +124,7 @@ const YourChannel = (props) => {
       }
       await callGetCurrentUser();
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
     }
   };
 
@@ -145,7 +145,7 @@ const YourChannel = (props) => {
       }
       await callGetCurrentUser();
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
     }
   };
 
@@ -186,7 +186,7 @@ const YourChannel = (props) => {
       try {
         const response = await callGetChannelStats();
       } catch (error) {
-        showMessage("error", error, 2);
+        showMessage("error", error.message, 2);
 
         setLoading(false);
       }
@@ -196,7 +196,7 @@ const YourChannel = (props) => {
       try {
         const response = await callgetMyVideos();
       } catch (error) {
-        showMessage("error", error, 2);
+        showMessage("error", error.message.message, 2);
 
         setLoading(false);
       }
@@ -220,7 +220,7 @@ const YourChannel = (props) => {
         await callgetMyVideos();
       }
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
     }
   };
 
@@ -233,7 +233,7 @@ const YourChannel = (props) => {
         await callgetMyVideos();
       }
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
     }
   };
 
@@ -263,7 +263,7 @@ const YourChannel = (props) => {
           setIsModalVisible={setIsModalVisible}
           toggleModal={toggleModal}
           groupByDate={groupByDate}
-          videoData={callgetMyVideosData?.getMyVideosData?.data}
+          videoData={callgetMyVideosData?.getmyVideosData?.data}
           handleDeleteVideo={handleDeleteVideo}
           // dashboard
           ChannelStats={callGetChannelStatsData?.getChannelStatsData?.data}
@@ -285,7 +285,7 @@ const mapDispatchToProps = (dispatch) => {
     callUpdateUser: (data) => dispatch(updateUser(data)),
     callUpdateCoverImage: (data) => dispatch(updateCoverImage(data)),
     callUpdateAvatar: (data) => dispatch(updateAvatar(data)),
-    callgetMyVideos: (data) => dispatch(getMyVideos(data)),
+    callgetMyVideos: (data) => dispatch(getmyVideos(data)),
     callGetChannelStats: (data) => dispatch(getChannelStats(data)),
     callTogglePublishData: (data) => dispatch(togglePublish(data)),
     callDeleteVideo: (videoId) => dispatch(deleteVideo(videoId)),

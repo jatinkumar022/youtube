@@ -31,7 +31,7 @@ const ViewPlaylistPage = (props) => {
           setLoading(false);
         }
       } catch (error) {
-        showMessage("error", error, 2);
+        showMessage("error", error.message, 2);
 
         setLoading(false);
       }
@@ -70,7 +70,7 @@ const ViewPlaylistPage = (props) => {
       }
       navigate(-1);
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
     }
     closeDeleteModal();
   };

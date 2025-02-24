@@ -29,7 +29,7 @@ const Homepage = (props) => {
 
         setLoading(false);
       } catch (error) {
-        showMessage("error", error, 2);
+        showMessage("error", error.message, 2);
 
         setLoading(false);
       }
@@ -45,7 +45,7 @@ const Homepage = (props) => {
 
         setLoading(false);
       } catch (error) {
-        showMessage("error", error, 2);
+        showMessage("error", error.message, 2);
 
         setLoading(false);
       }

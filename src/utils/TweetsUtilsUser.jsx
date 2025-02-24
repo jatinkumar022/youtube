@@ -45,7 +45,7 @@ export const TweetCard = (props) => {
       };
       handleGetComments();
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
     }
   }, []);
 
@@ -62,7 +62,7 @@ export const TweetCard = (props) => {
         setNewComment("");
       }
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
     }
   };
   const handleClickOutside = (event) => {
@@ -103,7 +103,7 @@ export const TweetCard = (props) => {
       setComments(getComments?.payload?.data?.comments);
       setEditingCommentId(null); // Reset the editing state
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
     }
   };
 
@@ -115,7 +115,7 @@ export const TweetCard = (props) => {
       setComments(getComments?.payload?.data?.comments);
       setEditingCommentId(null); // Reset the editing state
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
     }
   };
   //Tweets
@@ -151,7 +151,7 @@ export const TweetCard = (props) => {
         await getUserTweets();
       }
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
     }
   };
 
@@ -164,7 +164,7 @@ export const TweetCard = (props) => {
       }
       getUserTweets();
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
     }
   };
 

@@ -12,7 +12,7 @@ const HistoryPage = (props) => {
       try {
         const response = await callGetWatchHistory();
       } catch (error) {
-        showMessage("error", error);
+        showMessage("error", error.message);
       }
     };
     getWatchHistory();

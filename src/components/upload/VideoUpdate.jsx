@@ -87,7 +87,7 @@ const VideoUpdate = (props) => {
       setIsLoading(false);
       setIsVisible(false); // Close the modal
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
       setIsLoading(false);
     }
   };

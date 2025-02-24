@@ -36,7 +36,7 @@ const PlaylistSelectModal = ({
         try {
           await callGetCurrentUser;
         } catch (error) {
-          showMessage("error", error);
+          showMessage("error", error.message);
         }
       };
       getCurrentUser;
@@ -49,7 +49,7 @@ const PlaylistSelectModal = ({
         getPlaylists();
       }
     } catch (error) {
-      showMessage("error", error);
+      showMessage("error", error.message);
     }
   }, []);
 
@@ -66,7 +66,7 @@ const PlaylistSelectModal = ({
           }
         }
       } catch (error) {
-        showMessage("error", error);
+        showMessage("error", error.message);
       }
       closeModal();
     } else {

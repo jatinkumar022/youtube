@@ -26,7 +26,7 @@ const PrivateRoute = (props) => {
           }
         } catch (error) {
           setIsAuthenticated(false);
-          showMessage("error", error, 2);
+          showMessage("error", error.message, 2);
 
           navigate("/login"); // Redirect to login if authentication fails
         }

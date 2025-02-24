@@ -95,7 +95,7 @@ const YourContent = (props) => {
 
         // const response = await
       } catch (error) {
-        showMessage("error", error, 2);
+        showMessage("error", error.message, 2);
 
         setIsTweetLoading(false);
       }
@@ -120,7 +120,7 @@ const YourContent = (props) => {
       };
       handleUploadTweet();
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
     }
   };
 
@@ -137,7 +137,7 @@ const YourContent = (props) => {
       }
       // const response = await
     } catch (error) {
-      showMessage("error", error, 2);
+      showMessage("error", error.message, 2);
     }
   };
   // Videos
@@ -148,7 +148,7 @@ const YourContent = (props) => {
         const response = await callgetMyVideos();
         setIsVideoLoading(false);
       } catch (error) {
-        showMessage("error", error, 2);
+        showMessage("error", error.message, 2);
 
         setIsVideoLoading(false);
       }
@@ -186,7 +186,7 @@ const YourContent = (props) => {
           Array.from({ length: 10 }).map((_, index) => <VideoListLoader />)
         ) : (
           <VideoComponent
-            Video={callgetMyVideosData?.getMyVideosData?.data}
+            Video={callgetMyVideosData?.getmyVideosData?.data}
             currentUserData={callCurrentUserData?.getCurrentUserData?.user}
           />
         )
