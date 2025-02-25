@@ -14,7 +14,8 @@
     { "source": "/watchlater", "destination": "/" },
     { "source": "/liked-videos", "destination": "/" },
     { "source": "/channel/:username", "destination": "/" },
-    { "source": "/search", "destination": "/" },
+    { "source": "/search", "destination": "/" }, 
+    { "source": "/search-results", "destination": "/" },
     { "source": "/settings", "destination": "/" },
     { "source": "/your-content", "destination": "/" }
   ]
