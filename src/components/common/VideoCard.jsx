@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoMdMore } from "react-icons/io";
 import ReactPlayer from "react-player"; // Import ReactPlayer
 import { IoVolumeMuteOutline, IoVolumeHighOutline } from "react-icons/io5";
@@ -10,14 +10,15 @@ import { Popover } from "antd";
 import PlaylistSelectModal from "./Modals/openPlaylistsModal";
 const VideoCard = ({ item }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [isAutoPlay, setIsAutoPLay] = useState(true);
+  const [isAutoPlay, setIsAutoPLay] = useState(false);
   const [isMuted, setIsMuted] = useState(true); // State for mute functionality
   const [progress, setProgress] = useState(0);
   const [isModalVisible, setModalVisible] = useState(false);
   const [open, setOpen] = useState(false);
-
+  const hoverTimeoutRef = useRef(null);
   const navigate = useNavigate();
   const playerRef = useRef(null); // Reference to ReactPlayer
+  const [waitingBar, setWaitingBar] = useState(0);
 
   const handleOpen = () => {
     setOpen((prev) => !prev);
@@ -40,11 +41,46 @@ const VideoCard = ({ item }) => {
     playerRef.current.seekTo(seekTo);
   };
 
+  const handleMouseEnter = () => {
+    hoverTimeoutRef.current = setTimeout(() => {
+      setIsAutoPLay(true);
+      setIsHovered(true);
+    }, 1200); // 4 seconds delay
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    clearTimeout(hoverTimeoutRef.current); // Clear the timeout when the hover ends
+    setIsAutoPLay(false); // Reset auto-play state
+    setIsHovered(false);
+  };
+
+  useEffect(() => {
+    let interval;
+    if (isHovered) {
+      interval = setInterval(() => {
+        setWaitingBar((prev) => {
+          const nextValue = prev + 1;
+          if (nextValue >= 100) {
+            clearInterval(interval);
+
+            return 100;
+          }
+          return nextValue;
+        });
+      }, 12); // 20ms per step for a 2-second duration
+    } else {
+      setWaitingBar(0); // Reset progress when not hovered
+    }
+
+    return () => clearInterval(interval);
+  }, [isHovered]);
+
   return (
     <div
       className="flex flex-col justify-start items-stretch w-full max-w-[450px] sm:max-w-[400px] md:max-w-[300px] lg:max-w-[390px] 2xl:max-w-[490px] 3xl:max-w-[590px] bg-white rounded-lg  dark:bg-[#0b0b0b] overflow-hidden transition-transform duration-300 cursor-pointer"
-      onMouseEnter={() => setIsHovered(true)} // Hover event
-      onMouseLeave={() => setIsHovered(false)} // Hover out event
+      onMouseEnter={handleMouseEnter} // Hover event
+      onMouseLeave={handleMouseLeave} // Hover out event
     >
       <>
         <div className="relative w-full h-0 pb-[56.25%]">
@@ -86,6 +122,13 @@ const VideoCard = ({ item }) => {
             </div>
           ) : (
             <>
+              <div
+                className="absolute bg-blue-600 h-0.5 w-full top-0 left-0 z-40 rounded-full"
+                style={{
+                  width: `${waitingBar}%`,
+                  transition: "width 0.02s linear",
+                }}
+              />
               <img
                 src={item?.thumbnail}
                 alt={item?.title}

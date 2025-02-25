@@ -25,7 +25,7 @@ const UserComponent = (props) => {
   const closeModal = () => {
     setIsModalOpen(false); // Close modal
   };
-  console.log(watchHistory);
+
   return (
     <>
       <div className="p-4 min-[500px]:p-10  min-[600px]:px-32 min-[800px]:px-18 ">

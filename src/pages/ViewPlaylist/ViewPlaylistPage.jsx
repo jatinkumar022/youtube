@@ -52,7 +52,6 @@ const ViewPlaylistComponent = ({
     const getMyVideos = async () => {
       try {
         const response = await callgetMyVideos();
-        console.log(response);
       } catch (error) {
         showMessage("error", error.message, 2);
       }
