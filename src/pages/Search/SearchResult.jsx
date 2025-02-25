@@ -30,7 +30,7 @@ const SearchComponent = ({
 
               {videos?.map((item) => (
                 <div className="grid gap-4">
-                  <div className="p-4 bg-white rounded-lg shadow w-full dark:bg-[#222222] flex max-[800px]:flex-col gap-3 relative cursor-pointer">
+                  <div className="p-4 bg-transparent rounded-lg shadow w-full  flex max-[800px]:flex-col gap-3 relative cursor-pointer">
                     {/* Thumbnail */}
                     <div className="flex-shrink-0 ">
                       <div className="relative aspect-[16/9] min-[800px]:max-w-xs">
@@ -70,9 +70,8 @@ const SearchComponent = ({
                           >
                             {item?.owner?.fullName}
                           </p>
-                          <p className="text-xs text-gray-600 dark:text-gray-400 roboto-medium">
-                            {item?.views}
-                            {timesAgo(item?.createdAt)}
+                          <p className="text-xs text-gray-600 dark:text-gray-400 roboto-medium flex gap-2">
+                            {item?.views} views • {timesAgo(item?.createdAt)}
                           </p>
                         </div>
                         {/* Popover Button */}
