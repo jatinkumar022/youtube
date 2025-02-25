@@ -68,7 +68,6 @@ const VideoTemplate = (props) => {
       const getVideoDetails = async () => {
         if (videoId) {
           const response = await callGetVideoById(videoId);
-          console.log(response);
         } else {
           showMessage("error", "Invalid Video or video not found");
         }
@@ -129,7 +128,7 @@ const VideoTemplate = (props) => {
       link.click();
       window.URL.revokeObjectURL(link.href); // Clean up the URL object
     } catch (error) {
-      console.error("Error downloading the file:", error);
+      showMessage("error", error.message);
     }
   };
   const content = (
@@ -160,11 +159,9 @@ const VideoTemplate = (props) => {
       const timer = setTimeout(() => {
         callIncrementVideoView(Video._id)
           .unwrap()
-          .then((updatedVideo) => {
-            console.log("Video view incremented:", updatedVideo);
-          })
+          .then((updatedVideo) => {})
           .catch((error) => {
-            console.error("Error incrementing video view:", error);
+            showMessage("error", error.message);
           });
       }, 3000); // 30 seconds timer
 

@@ -18,6 +18,7 @@ import YourContent from "../pages/YourContent";
 import PrivateRoute from "./PrivateRoute";
 import YourChannel from "../pages/YourChannel";
 import LikedVideos from "../pages/LikedVideos";
+import SearchResult from "../pages/Search";
 const AppRoutes = () => {
   return (
     <>
@@ -126,6 +127,14 @@ const AppRoutes = () => {
           element={
             <PrivateRoute>
               <Search />{" "}
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/search-results"
+          element={
+            <PrivateRoute>
+              <SearchResult />{" "}
             </PrivateRoute>
           }
         />

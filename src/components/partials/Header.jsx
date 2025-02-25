@@ -11,11 +11,20 @@ import SideDrawer from "../common/SideDrawer";
 import ProfileMenu from "../common/ProfileDropdown";
 import VoiceToTextPopover from "../common/VoiceToTextPopover";
 import { Link, useNavigate } from "react-router";
+import { getSuggestions } from "../../redux/slice/search/getSuggestionsSlice";
+import { connect } from "react-redux";
 
-const Header = ({ isVideo, onUploadClick, Subscriptions }) => {
+const Header = ({
+  isVideo,
+  onUploadClick,
+  Subscriptions,
+  callGetSuggestions,
+}) => {
   const [open, setOpen] = useState(false);
   const [placement, setPlacement] = useState("bottomLeft");
   const [popoverVisible, setPopoverVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
   const navigate = useNavigate();
   const handleVisibleChange = (visible) => {
     setPopoverVisible(visible);
@@ -125,27 +134,87 @@ const Header = ({ isVideo, onUploadClick, Subscriptions }) => {
     </>
   );
 
+  // Saerch
+
+  // Fetch search suggestions as the user types
+  const fetchSuggestions = async (query) => {
+    if (query.length > 1) {
+      try {
+        const response = await callGetSuggestions(query);
+        // Safeguard for undefined or unexpected response structure
+        if (response?.payload && Array.isArray(response?.payload?.data)) {
+          setSuggestions(response?.payload?.data); // Assuming suggestions are in response.data.data
+        } else {
+          setSuggestions([]); // Clear suggestions if data is not an array
+        }
+      } catch (error) {
+        showMessage("error", error.message);
+        setSuggestions([]); // Clear suggestions on error
+      }
+    } else {
+      setSuggestions([]); // Clear suggestions if query is too short
+    }
+  };
+
+  // Handle search input change
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    fetchSuggestions(value); // Fetch suggestions while typing
+  };
+
+  // Handle search (on button click or pressing "Enter")
+  const handleSearch = () => {
+    if (searchQuery?.trim()) {
+      // Redirect to search results page with the query
+
+      setSuggestions([]);
+      navigate(`/search-results?query=${searchQuery}`);
+    }
+  };
+
+  // Handle Enter key for search
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
+  // Handle click on suggestion
+  const handleSuggestionClick = (suggestion) => {
+    setSearchQuery(suggestion?.title);
+    setSuggestions([]); // Clear suggestions
+    handleSearch();
+  };
+
   const searchContent = (
     <>
-      <div className="dark:bg-[#212121] dark:text-white p-1  rounded-md ">
-        <div className=" hover:bg-[#f2f2f2] cursor-pointer hover:dark:bg-[#2a2c2c]  items-center gap-3  ">
-          <div className="flex justify-between items-center p-1 gap-3 ">
-            <div className="flex gap-2 items-center w-96">
-              <div>
-                <GoHistory />
+      {suggestions?.length > 0 && (
+        <div className="-mt-3">
+          <div className="dark:bg-[#212121] dark:text-white p-1  rounded-md ">
+            {suggestions?.map((suggestion) => (
+              <div
+                key={suggestion?._id}
+                className=" hover:bg-[#f2f2f2] cursor-pointer hover:dark:bg-[#2a2c2c]  items-center gap-3  "
+                onClick={() => handleSuggestionClick(suggestion)}
+              >
+                <div className="flex justify-between items-center p-1 gap-3 ">
+                  <div className="flex gap-2 items-center w-96">
+                    <div>
+                      <GoHistory />
+                    </div>
+                    <p className="truncate">{suggestion?.title}</p>
+                  </div>
+                  <button className="text-blue-500 ml-3">remove</button>
+                </div>
               </div>
-              <p className="truncate">
-                Lorem ipsum dolor sit amet consectetur a Lorem ipsum dolor sit
-                amet, consectetur adipisicing elit. Cupiditate, delectus!
-                dipisicing elit.sdsdasdasdasdadasdas
-              </p>
-            </div>
-            <button className="text-blue-500 ml-3">remove</button>
+            ))}
           </div>
         </div>
-      </div>
+      )}
     </>
   );
+
   return (
     <div
       className={`w-full z-20 fixed  sm:px-5  ${
@@ -181,15 +250,21 @@ const Header = ({ isVideo, onUploadClick, Subscriptions }) => {
           <div className="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-400  ">
             <IoIosSearch />
           </div>
-          <Popover content={searchContent} trigger="focus">
+          <Popover content={searchContent} open={suggestions.length > 0}>
             <input
               type="text"
               placeholder="Search"
+              value={searchQuery}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
               className="w-full px-5 py-[8px] pl-10 text-sm rounded-l-full dark:text-white text-black bg-white dark:bg-black  placeholder-gray-500 focus:outline-none focus:border-blue-300 dark:focus:border-blue-900  border-[1.5px] dark:border-[#222222]"
             />
           </Popover>
           {/* Search Icon */}
-          <button className="dark:bg-[#222222] bg-[#f2f2f2] px-4 rounded-r-full  text-gray-400 hover:text-black dark:hover:text-white focus:outline-none ">
+          <button
+            className="dark:bg-[#222222] bg-[#f2f2f2] px-4 rounded-r-full  text-gray-400 hover:text-black dark:hover:text-white focus:outline-none "
+            onClick={handleSearch}
+          >
             <IoIosSearch />
           </button>
 
@@ -240,5 +315,12 @@ const Header = ({ isVideo, onUploadClick, Subscriptions }) => {
     </div>
   );
 };
-
-export default Header;
+const mapStateToProps = (state) => {
+  return {};
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    callGetSuggestions: (query) => dispatch(getSuggestions(query)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

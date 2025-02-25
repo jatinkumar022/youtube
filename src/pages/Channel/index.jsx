@@ -82,10 +82,9 @@ const ChannelPage = (props) => {
   }, []);
 
   const handleSubscribe = async (userId) => {
-    console.log("object");
     try {
       const response = await callToggleSubscribe(userId);
-      console.log(response);
+
       callGetChannel(username);
     } catch (error) {}
   };

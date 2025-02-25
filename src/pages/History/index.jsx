@@ -2,22 +2,22 @@ import React, { useEffect } from "react";
 import HistoryComponent from "./HistoryPage";
 import { connect } from "react-redux";
 import useMessage from "../../utils/useMessage";
+import { getWatchHistory } from "../../redux/slice/users/getWatchHistorySlice";
 
 const HistoryPage = (props) => {
   const { callGetWatchHistory, callGetWatchHistoryData } = props;
   const { showMessage } = useMessage();
 
   useEffect(() => {
-    const getWatchHistory = async () => {
+    const getWatchedHistory = async () => {
       try {
         const response = await callGetWatchHistory();
       } catch (error) {
         showMessage("error", error.message);
       }
     };
-    getWatchHistory();
+    getWatchedHistory();
   }, []);
-  console.log(callGetWatchHistoryData?.getWatchHistoryData?.data);
 
   return (
     <>

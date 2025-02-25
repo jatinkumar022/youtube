@@ -72,28 +72,28 @@ const VoiceToTextPopover = () => {
       {isPopoverOpen && (
         <div
           ref={ref}
-          className="absolute z-10 mt-2 top-10 right-0 bg-white shadow-lg rounded-lg w-96 dark:bg-[#212121] cursor-default"
+          className="absolute z-10 mt-2 top-10 right-0 bg-white shadow-lg rounded-lg w-96 dark:bg-[#212121] cursor-default max-[425px]: "
         >
           <div className="p-4 w-full ">
             <div>
-              <h1 className="text-xl font-bold mb-2 text-gray-900 dark:text-gray-200">
+              <h1 className="min-[425px]:text-xl font-bold mb-2 text-gray-900 dark:text-gray-200 max-[425px]:text-md">
                 Voice to Text
               </h1>
-              <p className="text-gray-600 dark:text-gray-400 mb-4">
+              <p className="text-gray-600 dark:text-gray-400 mb-4 max-[425px]:text-sm">
                 Click "Start Listening" and speak. Your speech will be converted
                 to text.
               </p>
               {isListening ? (
-                <div className="text-gray-600 dark:text-gray-400 mb-4">
+                <div className="text-gray-600 dark:text-gray-400 mb-4 max-[425px]:text-sm">
                   Listening:
                 </div>
               ) : (
-                <div className="text-gray-600 dark:text-gray-400 mb-4">
+                <div className="text-gray-600 dark:text-gray-400 mb-4 max-[425px]:text-sm">
                   Start Listening:
                 </div>
               )}
             </div>
-            <div className="w-full p-2 border rounded bg-transparent border-none  mb-4">
+            <div className="w-full p-2 border rounded bg-transparent border-none  mb-4 max-[425px]:text-sm">
               {transcript}
             </div>
             <div className="flex justify-center w-full">
@@ -101,14 +101,14 @@ const VoiceToTextPopover = () => {
                 {isListening ? (
                   <button
                     onClick={stopListening}
-                    className="bg-[#717171] p-6  rounded-full"
+                    className="bg-[#717171] p-6  rounded-full max-[425px]:p-3"
                   >
                     <AiOutlineAudioMuted size={37} />
                   </button>
                 ) : (
                   <button
                     onClick={startListening}
-                    className="bg-[#717171] p-6  rounded-full"
+                    className="bg-[#717171] p-6  rounded-full max-[425px]:p-3"
                   >
                     <AiFillAudio size={37} />
                   </button>

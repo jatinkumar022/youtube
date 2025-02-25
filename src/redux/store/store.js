@@ -56,7 +56,8 @@ import getChannelPlaylistsSlice from "../slice/playlist/getChannelPlaylistsSlice
 import removeVideoFromPlaylistSlice from "../slice/playlist/removeVideoFromPlaylistSlice"
 import updatePlaylistSlice from "../slice/playlist/updatePlaylistSlice"
 
-
+import getSearchResultsSlice from "../slice/search/getSearchResultsSlice"
+import getSuggestionsSlice from "../slice/search/getSuggestionsSlice"
 const store = configureStore({
   reducer: {
 
@@ -128,7 +129,12 @@ const store = configureStore({
     getUserPlaylistsData: getUserPlaylistsSlice,
     getChannelPlaylistsData: getChannelPlaylistsSlice,
     removeVideoFromPlaylistData: removeVideoFromPlaylistSlice,
-    updatePlaylistData: updatePlaylistSlice
+    updatePlaylistData: updatePlaylistSlice,
+
+    // Search slice
+
+    getSearchResultsData: getSearchResultsSlice,
+    getSuggestionsData: getSuggestionsSlice
   },
 
   middleware: (getDefaultMiddleware) => {
