@@ -6,9 +6,8 @@ export const incrementVideoView = createAsyncThunk("incrementVideoView", async (
     const response = await api.patch(
       `/videos/${videoId}/views`,
       {
-
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
       }
     );

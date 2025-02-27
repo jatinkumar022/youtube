@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { connect } from "react-redux";
 import { getCurrentUser } from "../redux/slice/users/getCurrentUserSlice";
 import useMessage from "../utils/useMessage";
+import ReactLoading from "react-loading";
 
 const PrivateRoute = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -40,7 +41,12 @@ const PrivateRoute = (props) => {
   }, []);
 
   if (isUserLoading) {
-    return <div>Loading...</div>;
+    // if (true) {
+    return (
+      <div className="fixed inset-0 flex justify-center items-center">
+        <ReactLoading type={"bars"} height={30} width={30} color="white" />
+      </div>
+    );
   }
 
   // Render children if authenticated, or null otherwise

@@ -1,10 +1,10 @@
 import React from "react";
 import { format, isToday, isYesterday, compareDesc } from "date-fns"; // Added compareDesc for date sorting
-import { RxCross1 } from "react-icons/rx";
 import { useNavigate } from "react-router";
 import { formatTime, timesAgo } from "../../utils/timeAgo";
 
 const HistoryComponent = ({ history }) => {
+  console.log({ history });
   const navigate = useNavigate();
   // Function to group history by date
   const groupByDate = (items) => {
