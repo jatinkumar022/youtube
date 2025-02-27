@@ -1,16 +1,9 @@
-import { Spin, Select } from "antd";
 import React from "react";
 import { useNavigate } from "react-router";
 import { formatTime, timesAgo } from "../../utils/timeAgo";
+import ReactLoading from "react-loading";
 
-const { Option } = Select;
-
-const SearchComponent = ({
-  videos,
-  loading,
-
-  query,
-}) => {
+const SearchComponent = ({ videos, loading, query }) => {
   const navigate = useNavigate();
   return (
     <>
@@ -18,7 +11,7 @@ const SearchComponent = ({
         {/* Video List */}
         {loading ? (
           <div className="fixed inset-0 flex justify-center items-center">
-            <Spin size="large" />
+            <ReactLoading type={"bars"} height={35} width={35} color="white" />
           </div>
         ) : (
           <>

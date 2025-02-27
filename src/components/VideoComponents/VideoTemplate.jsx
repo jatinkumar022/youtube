@@ -153,22 +153,36 @@ const VideoTemplate = (props) => {
     </div>
   );
 
+  // // video Views count
+  // useEffect(() => {
+  //   if (Video && Video._id) {
+  //     const timer = setTimeout(async () => {
+  //       const response = await callIncrementVideoView(Video._id)
+  //         .unwrap()
+  //         .then((updatedVideo) => {})
+  //         .catch((error) => {
+  //           showMessage("error", error.message);
+  //         });
+
+  //       console.log(response);
+  //     }, 3000); // 30 seconds timer
+
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [Video]);
+
   // video Views count
   useEffect(() => {
     if (Video && Video._id) {
-      const timer = setTimeout(() => {
-        callIncrementVideoView(Video._id)
-          .unwrap()
-          .then((updatedVideo) => {})
-          .catch((error) => {
-            showMessage("error", error.message);
-          });
+      const timer = setTimeout(async () => {
+        const response = await callIncrementVideoView(Video._id);
+
+        console.log(response);
       }, 3000); // 30 seconds timer
 
       return () => clearTimeout(timer);
     }
   }, [Video, callIncrementVideoView]);
-
   return (
     <>
       {callGetVideoByIdData?.getVideoByIdData ?? !loading ? (
